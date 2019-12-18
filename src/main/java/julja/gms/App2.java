@@ -26,7 +26,9 @@ public class App2 {
       System.out.print("회원명 : ");
       userName[i] = sc.nextLine();
       System.out.print("가입일 : ");
-      userResisteredDate[i] = Date.valueOf(sc.nextLine());
+      userResisteredDate[i] = new Date(System.currentTimeMillis());
+      System.out.print(userResisteredDate[i]);
+      
       count++;
       System.out.println();
       System.out.print("계속 입력하시겠습니까?(Y|N) ");
