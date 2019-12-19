@@ -9,27 +9,37 @@ public class App2 {
 
     Scanner sc = new Scanner(System.in);
 
-    int size = 5000;
-    int[] userNum = new int[size]; 
-    String[] userEmail = new String[size];
-    String[] userPW = new String[size];
-    String[] userName = new String[size];
-    Date[] userResisteredDate = new Date[size];
+    final int SIZE = 5000;
+    /*
+    class User {
+      int userNum;
+      String userEmail, userPW, userName;
+      Date userResisteredDate;
+    }
+    */
+    User[] users = new User[SIZE];
+    for (int i = 0 ; i < SIZE ; i++) {
+      users[i] = new User();
+    }
+
     int count = 0;
 
-    for (int i = 0 ; i < size ; i++) {
-      userNum[i] = i+1; 
+    for (int i = 0 ; i < SIZE ; i++) {
+      User u = users[i];
+      u.userNum = i+1; 
       System.out.print("이메일 : ");
-      userEmail[i] = sc.nextLine();
+      u.userEmail = sc.nextLine();
       System.out.print("비밀번호 : ");
-      userPW[i] = sc.nextLine();
+      u.userPW = sc.nextLine();
       System.out.print("회원명 : ");
-      userName[i] = sc.nextLine();
+      u.userName = sc.nextLine();
       System.out.print("가입일 : ");
-      userResisteredDate[i] = new Date(System.currentTimeMillis());
-      System.out.print(userResisteredDate[i]);
-      
+      u.userResisteredDate = new Date(System.currentTimeMillis());
+      System.out.print(u.userResisteredDate);
+
       count++;
+
+      System.out.println();
       System.out.println();
       System.out.print("계속 입력하시겠습니까?(Y|N) ");
       String res = sc.nextLine();
@@ -42,16 +52,10 @@ public class App2 {
       }
     }
     System.out.println();
-    for (int j = 0 ; j < count ; j++) {
+    for (int i = 0 ; i < count ; i++) {
+      User u = users[i];
       System.out.printf("[%d] %s | %s | %s\n", 
-          userNum[j], userEmail[j], userName[j], userResisteredDate[j]);
-      /*
-      System.out.printf("회원번호 : %d\n", userNum);
-      System.out.printf("이메일 : %s\n", userEmail);
-      System.out.printf("비밀번호 : %s\n", userPW);
-      System.out.printf("회원명 : %s\n", userName);
-      System.out.printf("가입일 : %s\n", userResisteredDate);
-       */
+          u.userNum, u.userEmail, u.userName, u.userResisteredDate);
     }
   }
 }
