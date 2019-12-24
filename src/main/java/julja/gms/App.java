@@ -1,6 +1,9 @@
 package julja.gms;
 
 import java.util.Scanner;
+import julja.gms.Handler.BoardHandler;
+import julja.gms.Handler.GameHandler;
+import julja.gms.Handler.UserHandler;
 
 public class App {
 

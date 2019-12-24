@@ -1,21 +1,17 @@
-package julja.gms;
+package julja.gms.Handler;
 
 import java.sql.Date;
 import java.util.Scanner;
+import julja.gms.domain.Board;
 
 public class BoardHandler {
 
-  static class Board {
-    String bbsName, bbsText;
-    Date today;
-    int bbsNum, bbsHits;
-  }
   static final int SIZE = 100;
   static Board[] boards = new Board[SIZE];
   static int board_count = 0;
-  static Scanner sc;
+  public static Scanner sc;
 
-  static void addBoard() {
+  public static void addBoard() {
     Board b = new Board();
     b.bbsNum = board_count+1;
     System.out.print("제목 : ");
@@ -29,7 +25,7 @@ public class BoardHandler {
     System.out.println();
   }
 
-  static void listBoard() {
+  public static void listBoard() {
     for (int i = 0 ; i < board_count ; i++) {
       Board b1 = boards[i];
       System.out.printf("[%d] %s | %s | %s | %d \n",

@@ -1,21 +1,18 @@
-package julja.gms;
+package julja.gms.Handler;
 
 import java.sql.Date;
 import java.util.Scanner;
+import julja.gms.domain.User;
+
 
 public class UserHandler {
 
-  static class User {
-    int userNum;
-    String userEmail, userPW, userName;
-    Date userResisteredDate;
-  }
   static final int SIZE = 100;
   static User[] users = new User[SIZE];
   static int user_count = 0;
-  static Scanner sc;
+  public static Scanner sc;
 
-  static void addUser() {
+  public static void addUser() {
     User u = new User();
     u.userNum = user_count+1; 
     System.out.print("이메일 : ");
@@ -32,7 +29,7 @@ public class UserHandler {
     System.out.println();
   }
 
-  static void listUser() {
+  public static void listUser() {
     for (int i = 0 ; i < user_count ; i++) {
       User u1 = users[i];
       System.out.printf("[%d] %s | %s | %s\n", 

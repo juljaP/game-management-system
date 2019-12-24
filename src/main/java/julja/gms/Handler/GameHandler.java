@@ -1,21 +1,17 @@
-package julja.gms;
+package julja.gms.Handler;
 
 import java.sql.Date;
 import java.util.Scanner;
+import julja.gms.domain.Game;
 
 public class GameHandler {
 
-  static class Game {
-    int gameNum;
-    String gameName, gameProduction, gamePlatform, gameGenre, gameIllust, gameVoice;
-    Date gameDate;
-  }
   static final int SIZE = 100;
   static Game[] games = new Game[SIZE];
   static int game_count = 0;
-  static Scanner sc;
+  public static Scanner sc;
 
-  static void addGame() {
+  public static void addGame() {
     Game g = new Game();
     System.out.print("품번 : ");
     g.gameNum = sc.nextInt();
@@ -40,7 +36,7 @@ public class GameHandler {
     games[game_count++] = g;
   }
 
-  static void listGame() {
+  public static void listGame() {
     for (int i = 0 ; i < game_count ; i++)  {
       Game g1 = games[i];
       System.out.printf("[%d] %s | %s | %s | %s\n", 
