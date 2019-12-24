@@ -10,7 +10,7 @@ public class UserHandler {
   static final int SIZE = 100;
   static User[] users = new User[SIZE];
   static int user_count = 0;
-  public static Scanner sc;
+  static public Scanner sc;
 
   public static void addUser() {
     User u = new User();
@@ -37,6 +37,5 @@ public class UserHandler {
     }
     System.out.println();
   }
-
 
 }
