@@ -11,14 +11,11 @@ public class App {
   static final int SIZE = 100;
   
   public static void main(String[] args) {
-    GameHandler.sc = sc;
-    UserHandler.sc = sc;
-    BoardHandler.sc = sc;
     
-    GameHandler gh = new GameHandler();
-    UserHandler uh = new UserHandler();
-    BoardHandler bh1 = new BoardHandler();
-    BoardHandler bh2 = new BoardHandler();
+    GameHandler gh = new GameHandler(sc);
+    UserHandler uh = new UserHandler(sc);
+    BoardHandler bh1 = new BoardHandler(sc);
+    BoardHandler bh2 = new BoardHandler(sc, 2000);
 
     while (true) {
       String command = prompt();

@@ -6,19 +6,32 @@ import julja.gms.domain.Board;
 
 public class BoardHandler {
 
-  Board[] boards = new Board[SIZE];
+  Board[] boards; 
   int board_count = 0;
   
   static final int SIZE = 100;
-  public static Scanner sc;
+  public Scanner input;
+  
+  public BoardHandler(Scanner input) {
+    this.input = input;
+    this.boards = new Board[SIZE];
+  }
+  
+  public BoardHandler(Scanner input, int capacity) {
+    this.input = input;
+    if (capacity < SIZE || capacity > 10000)
+      this.boards = new Board[SIZE];
+    else
+      this.boards = new Board[capacity];
+  } 
 
   public void addBoard() {
     Board b = new Board();
     b.bbsNum = this.board_count+1;
     System.out.print("제목 : ");
-    b.bbsName = sc.nextLine();
+    b.bbsName = input.nextLine();
     System.out.print("내용 : ");
-    b.bbsText = sc.nextLine();
+    b.bbsText = input.nextLine();
     b.today = new Date(System.currentTimeMillis());
     b.bbsHits = 0;
     this.boards[this.board_count++] = b;

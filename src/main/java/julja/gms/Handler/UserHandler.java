@@ -7,21 +7,26 @@ import julja.gms.domain.User;
 
 public class UserHandler {
 
-  User[] users = new User[SIZE];
+  User[] users;
   int user_count = 0;
   
   static final int SIZE = 100;
-  static public Scanner sc;
+  public Scanner input;
+  
+  public UserHandler(Scanner input) {
+    this.input = input;
+    this.users = new User[SIZE];
+  }
 
   public void addUser() {
     User u = new User();
     u.userNum = this.user_count+1; 
     System.out.print("이메일 : ");
-    u.userEmail = sc.nextLine();
+    u.userEmail = input.nextLine();
     System.out.print("비밀번호 : ");
-    u.userPW = sc.nextLine();
+    u.userPW = input.nextLine();
     System.out.print("회원명 : ");
-    u.userName = sc.nextLine();
+    u.userName = input.nextLine();
     System.out.print("가입일 : ");
     u.userResisteredDate = new Date(System.currentTimeMillis());
     System.out.println(u.userResisteredDate);

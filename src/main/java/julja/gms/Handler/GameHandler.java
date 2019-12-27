@@ -6,32 +6,37 @@ import julja.gms.domain.Game;
 
 public class GameHandler {
 
-  Game[] games = new Game[SIZE];
+  Game[] games;
   int game_count = 0;
   
   static final int SIZE = 100;
-  public static Scanner sc;
+  public Scanner input;
+  
+  public GameHandler (Scanner input) {
+    this.input = input;
+    this.games = new Game[SIZE];
+  }
 
   public void addGame() {
     Game g = new Game();
     System.out.print("품번 : ");
-    g.gameNum = sc.nextInt();
-    sc.nextLine();
+    g.gameNum = input.nextInt();
+    input.nextLine();
     System.out.print("게임명 : ");
-    g.gameName = sc.nextLine();
+    g.gameName = input.nextLine();
     System.out.print("제작사 : ");
-    g.gameProduction = sc.nextLine();
+    g.gameProduction = input.nextLine();
     System.out.print("발매일 : ");
-    g.gameDate = Date.valueOf(sc.next());
-    sc.nextLine();
+    g.gameDate = Date.valueOf(input.next());
+    input.nextLine();
     System.out.print("플랫폼 : ");
-    g.gamePlatform = sc.nextLine();
+    g.gamePlatform = input.nextLine();
     System.out.print("장르 : ");
-    g.gameGenre = sc.nextLine();
+    g.gameGenre = input.nextLine();
     System.out.print("작화 : ");
-    g.gameIllust = sc.nextLine();
+    g.gameIllust = input.nextLine();
     System.out.print("음성 : ");
-    g.gameVoice = sc.nextLine();
+    g.gameVoice = input.nextLine();
     System.out.println("저장하였습니다.");
     System.out.println();
     this.games[this.game_count++] = g;
