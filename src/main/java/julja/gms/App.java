@@ -2,7 +2,6 @@ package julja.gms;
 
 import java.util.Scanner;
 import julja.gms.Handler.BoardHandler;
-import julja.gms.Handler.BoardHandler2;
 import julja.gms.Handler.GameHandler;
 import julja.gms.Handler.UserHandler;
 
@@ -15,35 +14,39 @@ public class App {
     GameHandler.sc = sc;
     UserHandler.sc = sc;
     BoardHandler.sc = sc;
-    BoardHandler2.sc = sc; 
+    
+    GameHandler gh = new GameHandler();
+    UserHandler uh = new UserHandler();
+    BoardHandler bh1 = new BoardHandler();
+    BoardHandler bh2 = new BoardHandler();
 
     while (true) {
       String command = prompt();
       
       switch (command) {
         case "/game/add" :
-          GameHandler.addGame();
+          gh.addGame();
           break;
         case "/game/list" :
-          GameHandler.listGame();
+          gh.listGame();
           break;
         case "/user/add" :
-          UserHandler.addUser();
+          uh.addUser();
           break;
         case "/user/list" :
-          UserHandler.listUser();
+          uh.listUser();
           break;
         case "/board/add" :
-          BoardHandler.addBoard();
+          bh1.addBoard();
           break;
         case "/board/list" :
-          BoardHandler.listBoard();
+          bh1.listBoard();
           break;
         case "/board2/add" :
-          BoardHandler2.addBoard();
+          bh2.addBoard();
           break;
         case "/board2/list" :
-          BoardHandler2.listBoard();
+          bh2.listBoard();
           break;
         case "quit" : 
           sc.close();
