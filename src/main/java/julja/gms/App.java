@@ -39,11 +39,17 @@ public class App {
         case "/board/list" :
           bh1.listBoard();
           break;
+        case "/board/detail" :
+          bh1.detailBoard();
+          break;
         case "/board2/add" :
           bh2.addBoard();
           break;
         case "/board2/list" :
           bh2.listBoard();
+          break;
+        case "/board2/detail" :
+          bh2.detailBoard();
           break;
         case "quit" : 
           sc.close();

@@ -5,47 +5,55 @@ import java.util.Scanner;
 import julja.gms.domain.Board;
 
 public class BoardHandler {
-
-  Board[] boards; 
-  int board_count = 0;
   
-  static final int SIZE = 100;
   public Scanner input;
+  BoardList boardList;
   
   public BoardHandler(Scanner input) {
     this.input = input;
-    this.boards = new Board[SIZE];
+    boardList = new BoardList();
   }
   
   public BoardHandler(Scanner input, int capacity) {
     this.input = input;
-    if (capacity < SIZE || capacity > 10000)
-      this.boards = new Board[SIZE];
-    else
-      this.boards = new Board[capacity];
+    boardList = new BoardList(capacity);
   } 
 
   public void addBoard() {
     Board b = new Board();
-    b.setBbsNum(this.board_count+1);
+    b.setBbsNum(boardList.getSize());
     System.out.print("제목 : ");
     b.setBbsName(input.nextLine());
     System.out.print("내용 : ");
     b.setBbsText(input.nextLine());
     b.setToday(new Date(System.currentTimeMillis()));
     b.setBbsHits(0);
-    this.boards[this.board_count++] = b;
+    boardList.add(b);
     System.out.println("저장하였습니다.");
     System.out.println();
   }
 
   public void listBoard() {
-    for (int i = 0 ; i < this.board_count ; i++) {
-      Board b1 = this.boards[i];
+    Board[] arr = boardList.toArray();
+    for (Board b : arr) {
       System.out.printf("[%d] %s | %s | %s | %d \n",
-          b1.getBbsNum(), b1.getBbsName(), b1.getBbsText(), b1.getBbsText(), b1.getBbsHits());
+          b.getBbsNum(), b.getBbsName(), b.getBbsText(), b.getBbsText(), b.getBbsHits());
     }
     System.out.println();
+  }
+  
+  public void detailBoard() {
+    System.out.print("게시물 번호 ? ");
+    Board b = boardList.detail(input.nextInt());
+    input.nextLine();
+    
+    if(b == null) {
+      System.out.println("유효한 게시물 번호가 아닙니다.");
+      System.out.println();
+    } else {
+    System.out.printf("[%d] %s | %s | %s | %d \n",
+        b.getBbsNum(), b.getBbsName(), b.getBbsText(), b.getBbsText(), b.getBbsHits());
+    }
   }
 
 }

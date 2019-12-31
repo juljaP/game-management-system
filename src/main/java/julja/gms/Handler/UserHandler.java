@@ -5,21 +5,18 @@ import java.util.Scanner;
 import julja.gms.domain.User;
 
 public class UserHandler {
-
-  User[] users;
-  int user_count = 0;
   
-  static final int SIZE = 100;
   public Scanner input;
+  UserList userList;
   
   public UserHandler(Scanner input) {
     this.input = input;
-    this.users = new User[SIZE];
+    userList = new UserList();
   }
 
   public void addUser() {
     User u = new User();
-    u.setUserNum(this.user_count+1); 
+    u.setUserNum(userList.getSize()); 
     System.out.print("이메일 : ");
     u.setUserEmail(input.nextLine());
     System.out.print("비밀번호 : ");
@@ -29,16 +26,16 @@ public class UserHandler {
     System.out.print("가입일 : ");
     u.setUserResisteredDate(new Date(System.currentTimeMillis()));
     System.out.println(u.getUserResisteredDate());
-    this.users[this.user_count++] = u;
+    userList.add(u);
     System.out.println("저장하였습니다.");
     System.out.println();
   }
 
   public void listUser() {
-    for (int i = 0 ; i < this.user_count ; i++) {
-      User u1 = this.users[i];
+    User[] arr = userList.toArray();
+    for (User u : arr) {
       System.out.printf("[%d] %s | %s | %s\n", 
-          u1.getUserNum(), u1.getUserEmail(), u1.getUserName(), u1.getUserResisteredDate());
+          u.getUserNum(), u.getUserEmail(), u.getUserName(), u.getUserResisteredDate());
     }
     System.out.println();
   }

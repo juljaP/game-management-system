@@ -5,16 +5,13 @@ import java.util.Scanner;
 import julja.gms.domain.Game;
 
 public class GameHandler {
-
-  Game[] games;
-  int game_count = 0;
   
-  static final int SIZE = 100;
   public Scanner input;
+  GameList gameList;
   
   public GameHandler (Scanner input) {
     this.input = input;
-    this.games = new Game[SIZE];
+    gameList = new GameList();
   }
 
   public void addGame() {
@@ -39,12 +36,12 @@ public class GameHandler {
     g.setGameVoice(input.nextLine());
     System.out.println("저장하였습니다.");
     System.out.println();
-    this.games[this.game_count++] = g;
+    gameList.add(g);
   }
 
   public void listGame() {
-    for (int i = 0 ; i < this.game_count ; i++)  {
-      Game g1 = this.games[i];
+    Game[] arr = gameList.toArray();
+    for(Game g1 : arr) {
       System.out.printf("[%d] %s | %s | %s | %s\n", 
           g1.getGameNum(), g1.getGameName(), g1.getGameProduction(), g1.getGameDate(), g1.getGameGenre());
     }
