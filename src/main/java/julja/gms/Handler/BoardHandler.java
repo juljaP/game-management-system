@@ -27,13 +27,13 @@ public class BoardHandler {
 
   public void addBoard() {
     Board b = new Board();
-    b.bbsNum = this.board_count+1;
+    b.setBbsNum(this.board_count+1);
     System.out.print("제목 : ");
-    b.bbsName = input.nextLine();
+    b.setBbsName(input.nextLine());
     System.out.print("내용 : ");
-    b.bbsText = input.nextLine();
-    b.today = new Date(System.currentTimeMillis());
-    b.bbsHits = 0;
+    b.setBbsText(input.nextLine());
+    b.setToday(new Date(System.currentTimeMillis()));
+    b.setBbsHits(0);
     this.boards[this.board_count++] = b;
     System.out.println("저장하였습니다.");
     System.out.println();
@@ -43,7 +43,7 @@ public class BoardHandler {
     for (int i = 0 ; i < this.board_count ; i++) {
       Board b1 = this.boards[i];
       System.out.printf("[%d] %s | %s | %s | %d \n",
-          b1.bbsNum, b1.bbsName, b1.bbsText, b1.today, b1.bbsHits);
+          b1.getBbsNum(), b1.getBbsName(), b1.getBbsText(), b1.getBbsText(), b1.getBbsHits());
     }
     System.out.println();
   }

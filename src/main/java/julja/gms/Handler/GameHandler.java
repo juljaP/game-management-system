@@ -20,23 +20,23 @@ public class GameHandler {
   public void addGame() {
     Game g = new Game();
     System.out.print("품번 : ");
-    g.gameNum = input.nextInt();
+    g.setGameNum(input.nextInt());
     input.nextLine();
     System.out.print("게임명 : ");
-    g.gameName = input.nextLine();
+    g.setGameName(input.nextLine());
     System.out.print("제작사 : ");
-    g.gameProduction = input.nextLine();
+    g.setGameProduction(input.nextLine()); 
     System.out.print("발매일 : ");
-    g.gameDate = Date.valueOf(input.next());
+    g.setGameDate(Date.valueOf(input.next()));
     input.nextLine();
     System.out.print("플랫폼 : ");
-    g.gamePlatform = input.nextLine();
+    g.setGamePlatform(input.nextLine()); 
     System.out.print("장르 : ");
-    g.gameGenre = input.nextLine();
+    g.setGameGenre(input.nextLine()); 
     System.out.print("작화 : ");
-    g.gameIllust = input.nextLine();
+    g.setGameIllust(input.nextLine()); 
     System.out.print("음성 : ");
-    g.gameVoice = input.nextLine();
+    g.setGameVoice(input.nextLine());
     System.out.println("저장하였습니다.");
     System.out.println();
     this.games[this.game_count++] = g;
@@ -46,7 +46,7 @@ public class GameHandler {
     for (int i = 0 ; i < this.game_count ; i++)  {
       Game g1 = this.games[i];
       System.out.printf("[%d] %s | %s | %s | %s\n", 
-          g1.gameNum, g1.gameName, g1.gameProduction, g1.gameDate, g1.gameGenre);
+          g1.getGameNum(), g1.getGameName(), g1.getGameProduction(), g1.getGameDate(), g1.getGameGenre());
     }
     System.out.println();
   }
