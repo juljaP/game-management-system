@@ -7,11 +7,11 @@ import julja.gms.domain.User;
 public class UserHandler {
   
   public Scanner input;
-  UserList userList;
+  ArrayList userList;
   
   public UserHandler(Scanner input) {
     this.input = input;
-    userList = new UserList();
+    userList = new ArrayList();
   }
 
   public void addUser() {
@@ -32,8 +32,9 @@ public class UserHandler {
   }
 
   public void listUser() {
-    User[] arr = userList.toArray();
-    for (User u : arr) {
+    Object[] arr = userList.toArray();
+    for (Object obj : arr) {
+      User u = (User)obj;
       System.out.printf("[%d] %s | %s | %s\n", 
           u.getUserNum(), u.getUserEmail(), u.getUserName(), u.getUserResisteredDate());
     }

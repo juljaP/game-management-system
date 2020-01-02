@@ -7,11 +7,11 @@ import julja.gms.domain.Game;
 public class GameHandler {
   
   public Scanner input;
-  GameList gameList;
+  ArrayList gameList;
   
   public GameHandler (Scanner input) {
     this.input = input;
-    gameList = new GameList();
+    gameList = new ArrayList();
   }
 
   public void addGame() {
@@ -40,10 +40,11 @@ public class GameHandler {
   }
 
   public void listGame() {
-    Game[] arr = gameList.toArray();
-    for(Game g1 : arr) {
+    Object[] arr = gameList.toArray();
+    for(Object obj : arr) {
+      Game g = (Game)obj;
       System.out.printf("[%d] %s | %s | %s | %s\n", 
-          g1.getGameNum(), g1.getGameName(), g1.getGameProduction(), g1.getGameDate(), g1.getGameGenre());
+          g.getGameNum(), g.getGameName(), g.getGameProduction(), g.getGameDate(), g.getGameGenre());
     }
     System.out.println();
   }

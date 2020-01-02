@@ -5,18 +5,18 @@ import java.util.Scanner;
 import julja.gms.domain.Board;
 
 public class BoardHandler {
-  
+
   public Scanner input;
-  BoardList boardList;
-  
+  ArrayList boardList;
+
   public BoardHandler(Scanner input) {
     this.input = input;
-    boardList = new BoardList();
+    boardList = new ArrayList();
   }
-  
+
   public BoardHandler(Scanner input, int capacity) {
     this.input = input;
-    boardList = new BoardList(capacity);
+    boardList = new ArrayList(capacity);
   } 
 
   public void addBoard() {
@@ -34,26 +34,26 @@ public class BoardHandler {
   }
 
   public void listBoard() {
-    Board[] arr = boardList.toArray();
-    for (Board b : arr) {
+    Object[] arr = boardList.toArray();
+    for (Object obj : arr) {
+      Board b = (Board)obj;
       System.out.printf("[%d] %s | %s | %s | %d \n",
           b.getBbsNum(), b.getBbsName(), b.getBbsText(), b.getBbsText(), b.getBbsHits());
     }
     System.out.println();
   }
-  
+
   public void detailBoard() {
-    System.out.print("게시물 번호 ? ");
-    Board b = boardList.detail(input.nextInt());
+    System.out.print("게시물 인덱스 ? ");
+    Board b = (Board)(boardList.detail(input.nextInt()-1));
     input.nextLine();
-    
+
     if(b == null) {
       System.out.println("유효한 게시물 번호가 아닙니다.");
-      System.out.println();
     } else {
-    System.out.printf("[%d] %s | %s | %s | %d \n",
-        b.getBbsNum(), b.getBbsName(), b.getBbsText(), b.getBbsText(), b.getBbsHits());
+      System.out.printf("[%d] %s | %s | %s | %d \n",
+          b.getBbsNum(), b.getBbsName(), b.getBbsText(), b.getBbsText(), b.getBbsHits());
     }
+    System.out.println();
   }
-
 }
