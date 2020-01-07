@@ -7,66 +7,80 @@ import julja.gms.Handler.UserHandler;
 
 public class App {
 
-  static Scanner sc = new Scanner(System.in);
-  static final int SIZE = 100;
-  
-  public static void main(String[] args) {
-    
-    GameHandler gh = new GameHandler(sc);
-    UserHandler uh = new UserHandler(sc);
-    BoardHandler bh1 = new BoardHandler(sc);
-    BoardHandler bh2 = new BoardHandler(sc, 2000);
+	static Scanner sc = new Scanner(System.in);
+	static final int SIZE = 100;
 
-    while (true) {
-      String command = prompt();
-      
-      switch (command) {
-        case "/game/add" :
-          gh.addGame();
-          break;
-        case "/game/list" :
-          gh.listGame();
-          break;
-        case "/user/add" :
-          uh.addUser();
-          break;
-        case "/user/list" :
-          uh.listUser();
-          break;
-        case "/board/add" :
-          bh1.addBoard();
-          break;
-        case "/board/list" :
-          bh1.listBoard();
-          break;
-        case "/board/detail" :
-          bh1.detailBoard();
-          break;
-        case "/board2/add" :
-          bh2.addBoard();
-          break;
-        case "/board2/list" :
-          bh2.listBoard();
-          break;
-        case "/board2/detail" :
-          bh2.detailBoard();
-          break;
-        case "quit" : 
-          sc.close();
-          System.out.println("안녕!");
-          System.exit(0);
-        default :
-          System.out.println("실행할 수 없는 명령입니다.");
-          System.out.println();
-          break;
-      }
-    }
-  }
+	public static void main(String[] args) {
 
-  private static String prompt() {
-    System.out.print("명령> ");
-    String command= sc.nextLine();;
-    return command;
-  }
+		GameHandler gh = new GameHandler(sc);
+		UserHandler uh = new UserHandler(sc);
+		BoardHandler bh = new BoardHandler(sc);
+
+		while (true) {
+			String command = prompt();
+
+			switch (command) {
+			case "/game/add" :
+				gh.addGame();
+				break;
+			case "/game/list" :
+				gh.listGame();
+				break;
+			case "/game/detail" :
+				gh.detailGame();
+				break;
+			case "/game/update" :
+				gh.updateGame();
+				break;
+			case "/game/delete" :
+				gh.deleteGame();
+				break;
+			case "/user/add" :
+				uh.addUser();
+				break;
+			case "/user/list" :
+				uh.listUser();
+				break;
+			case "/user/detail" :
+				uh.detailUser();
+				break;
+			case "/user/update" :
+				uh.updateUser();
+				break;
+			case "/user/delete" :
+				uh.deleteUser();
+				break;
+			case "/board/add" :
+				bh.addBoard();
+				break;
+			case "/board/list" :
+				bh.listBoard();
+				break;
+			case "/board/detail" :
+				bh.detailBoard();
+				break;
+			case "/board/update" :
+				bh.updateBoard();
+				break;
+			case "/board/delete" :
+				bh.deleteBoard();
+				break;
+			case "quit" : 
+				sc.close();
+				System.out.println("안녕!");
+				System.exit(0);
+			default :
+				System.out.println("실행할 수 없는 명령입니다.");
+				System.out.println();
+				break;
+			}
+		}
+	}
+
+	private static String prompt() {
+		System.out.print("명령> ");
+		String command= sc.nextLine();;
+		return command;
+	}
 
 }

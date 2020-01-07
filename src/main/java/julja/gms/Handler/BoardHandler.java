@@ -15,7 +15,7 @@ public class BoardHandler {
 		boardList = new ArrayList<>();
 	}
 
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public BoardHandler(Scanner input, int capacity) {
 		this.input = input;
 		boardList = new ArrayList(capacity);
@@ -56,5 +56,45 @@ public class BoardHandler {
 					b.getBbsNum(), b.getBbsName(), b.getBbsText(), b.getBbsText(), b.getBbsHits());
 		}
 		System.out.println();
+	}
+
+	public void updateBoard() {
+		System.out.print("게시글 인덱스? ");
+		int index = input.nextInt();
+		Board board = boardList.get(index);
+		input.nextLine();
+		if (board == null) {
+			System.out.println("게시글 번호가 유효하지 않습니다.");
+		    System.out.println();
+		    return;
+		}
+		System.out.printf("내용(%s)? ", board.getBbsText());
+	    String text = input.nextLine();
+	    if (text.length() == 0) {
+	      System.out.println("게시글 변경을 취소했습니다.");
+	      System.out.println();
+	      return;
+	    }
+	    board.setBbsText(text);
+	    board.setToday(new Date(System.currentTimeMillis()));
+	    this.boardList.set(index, board);
+	    System.out.println("게시글을 변경했습니다.");
+	    System.out.println();
+		
+	}
+
+	public void deleteBoard() {
+		System.out.print("게시글 인덱스? ");
+		int index = input.nextInt();
+		Board board = boardList.get(index);
+		input.nextLine();
+		if (board == null) {
+			System.out.println("게시글 번호가 유효하지 않습니다.");
+		    System.out.println();
+		    return;
+		}
+		this.boardList.remove(index);
+		System.out.println("게시글을 삭제했습니다.");
+	    System.out.println();
 	}
 }
