@@ -41,7 +41,7 @@ public class ArrayList<E> {
 		}
 		this.list[this.size++] = obj;
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	public E get(int idx) {
 		if (idx >= 0 && idx <this.size) {
