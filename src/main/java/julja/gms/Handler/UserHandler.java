@@ -3,15 +3,16 @@ package julja.gms.Handler;
 import java.sql.Date;
 import java.util.Scanner;
 import julja.gms.domain.User;
+import julja.util.ArrayList;
 
 public class UserHandler {
   
   public Scanner input;
-  ArrayList userList;
+  ArrayList<User> userList;
   
   public UserHandler(Scanner input) {
     this.input = input;
-    userList = new ArrayList();
+    userList = new ArrayList<>();
   }
 
   public void addUser() {
@@ -32,9 +33,8 @@ public class UserHandler {
   }
 
   public void listUser() {
-    Object[] arr = userList.toArray();
-    for (Object obj : arr) {
-      User u = (User)obj;
+    User[] arr = userList.toArray(new User[] {});
+    for (User u : arr) {
       System.out.printf("[%d] %s | %s | %s\n", 
           u.getUserNum(), u.getUserEmail(), u.getUserName(), u.getUserResisteredDate());
     }

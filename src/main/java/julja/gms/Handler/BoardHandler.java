@@ -3,15 +3,16 @@ package julja.gms.Handler;
 import java.sql.Date;
 import java.util.Scanner;
 import julja.gms.domain.Board;
+import julja.util.ArrayList;
 
 public class BoardHandler {
 
   public Scanner input;
-  ArrayList boardList;
+  ArrayList<Board> boardList;
 
   public BoardHandler(Scanner input) {
     this.input = input;
-    boardList = new ArrayList();
+    boardList = new ArrayList<>();
   }
 
   public BoardHandler(Scanner input, int capacity) {
@@ -34,9 +35,8 @@ public class BoardHandler {
   }
 
   public void listBoard() {
-    Object[] arr = boardList.toArray();
-    for (Object obj : arr) {
-      Board b = (Board)obj;
+    Board[] arr = boardList.toArray(new Board[] {});
+    for (Board b : arr) {
       System.out.printf("[%d] %s | %s | %s | %d \n",
           b.getBbsNum(), b.getBbsName(), b.getBbsText(), b.getBbsText(), b.getBbsHits());
     }
@@ -45,7 +45,7 @@ public class BoardHandler {
 
   public void detailBoard() {
     System.out.print("게시물 인덱스 ? ");
-    Board b = (Board)(boardList.detail(input.nextInt()-1));
+    Board b = this.boardList.get(input.nextInt());
     input.nextLine();
 
     if(b == null) {

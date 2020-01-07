@@ -3,15 +3,16 @@ package julja.gms.Handler;
 import java.sql.Date;
 import java.util.Scanner;
 import julja.gms.domain.Game;
+import julja.util.ArrayList;
 
 public class GameHandler {
   
   public Scanner input;
-  ArrayList gameList;
+  ArrayList<Game> gameList;
   
   public GameHandler (Scanner input) {
     this.input = input;
-    gameList = new ArrayList();
+    gameList = new ArrayList<>();
   }
 
   public void addGame() {
@@ -40,9 +41,8 @@ public class GameHandler {
   }
 
   public void listGame() {
-    Object[] arr = gameList.toArray();
-    for(Object obj : arr) {
-      Game g = (Game)obj;
+    Game[] arr = gameList.toArray(new Game[] {});
+    for(Game g : arr) {
       System.out.printf("[%d] %s | %s | %s | %s\n", 
           g.getGameNum(), g.getGameName(), g.getGameProduction(), g.getGameDate(), g.getGameGenre());
     }
