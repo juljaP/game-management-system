@@ -1,6 +1,5 @@
 package julja.gms.Handler;
 
-import java.sql.Date;
 import julja.gms.domain.Game;
 import julja.util.ArrayList;
 import julja.util.Prompt;
@@ -58,54 +57,38 @@ public class GameHandler {
   }
   
   public void updateGame() {
-    boolean changed = false;
-    String s;
     
     int index = indexOfLesson(prompt.inputInt("게임 품번? : "));
-    Game game = this.gameList.get(index);
     if (index == -1) {
       System.out.println("해당하는 게임이 존재하지 않습니다.");
       System.out.println();
       return;
     }
+    Game oldGame = this.gameList.get(index);
+    Game newGame = new Game();
+    newGame.setGameNum(oldGame.getGameNum());
+    newGame.setGameName(prompt.inputString
+        (String.format("게임명(%s) ? ", oldGame.getGameName()), oldGame.getGameName()));
+
+    newGame.setGameProduction(prompt.inputString
+        (String.format("제작사(%s) ? ", oldGame.getGameProduction()), oldGame.getGameProduction()));
+    newGame.setGameDate(prompt.inputDate
+        (String.format("발매일(%s) ? ", oldGame.getGameDate()), oldGame.getGameDate()));
+    newGame.setGamePlatform(prompt.inputString
+        (String.format("플랫폼(%s) ? ", oldGame.getGamePlatform()), oldGame.getGamePlatform()));
+    newGame.setGameGenre(prompt.inputString
+        (String.format("장르(%s) ? ", oldGame.getGameGenre()), oldGame.getGameGenre()));
+    newGame.setGameIllust(prompt.inputString
+        (String.format("작화(%s) ? ", oldGame.getGameIllust()), oldGame.getGameIllust()));
+    newGame.setGameVoice(prompt.inputString
+        (String.format("음성(%s) ? ", oldGame.getGameVoice()), oldGame.getGameVoice()));
     
-    System.out.printf("게임명(%s)? ", game.getGameName());
-    s = input.nextLine();
-    if(s.length() != 0) {
-      game.setGameName(s);
+    if(oldGame.equals(newGame)) {
+    System.out.println("게임 정보 변경을 취소하였습니다.");
+    } else {
+      gameList.set(index, newGame);
+      System.out.println("게임 정보를 변경했습니다.");
     }
-    System.out.printf("제작사(%s)? ", game.getGameProduction());
-    s = input.nextLine();
-    if(s.length() != 0) {
-      game.setGameProduction(s);
-    }
-    System.out.printf("발매일(%s)? ", game.getGameDate());
-    s = input.nextLine();
-    if(s.length() != 0) {
-      game.setGameDate(Date.valueOf(s));
-    }
-    System.out.printf("플랫폼(%s)? ", game.getGamePlatform());
-    s = input.nextLine();
-    if(s.length() != 0) {
-      game.setGamePlatform(s);
-    }
-    System.out.printf("장르(%s)? ", game.getGameGenre());
-    s = input.nextLine();
-    if(s.length() != 0) {
-      game.setGameGenre(s);
-    }
-    System.out.printf("작화(%s)? ", game.getGameIllust());
-    s = input.nextLine();
-    if(s.length() != 0) {
-      game.setGameIllust(s);
-    }
-    System.out.printf("음성(%s)? ", game.getGameVoice());
-    s = input.nextLine();
-    if(s.length() != 0) {
-      game.setGameVoice(s);
-    }
-    gameList.set(index, game);
-    System.out.println("게임 정보를 변경했습니다.");
     System.out.println();
   }
 

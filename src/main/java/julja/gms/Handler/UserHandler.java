@@ -1,7 +1,6 @@
 package julja.gms.Handler;
 
 import java.sql.Date;
-import java.util.Scanner;
 import julja.gms.domain.User;
 import julja.util.ArrayList;
 import julja.util.Prompt;
@@ -19,12 +18,10 @@ public class UserHandler {
   public void addUser() {
     User u = new User();
     u.setUserNum(userList.getSize()+1); 
-    System.out.print("이메일 : ");
-    u.setUserEmail(input.nextLine());
-    System.out.print("비밀번호 : ");
-    u.setUserPW(input.nextLine());
-    System.out.print("회원명 : ");
-    u.setUserName(input.nextLine());
+
+    u.setUserEmail(prompt.inputString("이메일 : "));
+    u.setUserPW(prompt.inputString("비밀번호 : "));
+    u.setUserName(prompt.inputString("회원명 : "));
     System.out.print("가입일 : ");
     u.setUserResisteredDate(new Date(System.currentTimeMillis()));
     System.out.println(u.getUserResisteredDate());
@@ -43,9 +40,7 @@ public class UserHandler {
   }
 
   public void detailUser() {
-    System.out.print("회원 번호? ");
-    int index = indexOfUser(input.nextInt());
-    input.nextLine();
+    int index = indexOfUser(prompt.inputInt("회원 번호? "));
     if(index == -1) {
       System.out.println("해당하는 유저가 존재하지 않습니다.");
       System.out.println();
@@ -60,40 +55,33 @@ public class UserHandler {
   }
 
   public void updateUser() {
-    String s;
-    System.out.print("회원 번호? ");
-    int index = indexOfUser(input.nextInt());
-    input.nextLine();
+    int index = indexOfUser(prompt.inputInt("회원 번호? "));
     if(index == -1) {
       System.out.println("해당하는 유저가 존재하지 않습니다.");
       System.out.println();
       return;
     }
-    User u = userList.get(index);
-    System.out.printf("이메일(%s) : ", u.getUserEmail());
-    s = input.nextLine();
-    if(s.length() != 0) {
-      u.setUserEmail(s);
+    User oldUser = userList.get(index);
+    User newUser = new User();
+    newUser.setUserNum(oldUser.getUserNum());
+    newUser.setUserEmail(prompt.inputString
+        (String.format("이메일(%s) : ", oldUser.getUserEmail()), oldUser.getUserEmail()));
+    newUser.setUserPW(prompt.inputString
+        (String.format("비밀번호(%s) : ", oldUser.getUserPW()), oldUser.getUserPW()));
+    newUser.setUserName(prompt.inputString
+        (String.format("회원명(%s) : ", oldUser.getUserName()), oldUser.getUserName()));
+    newUser.setUserResisteredDate(oldUser.getUserResisteredDate());
+    if(newUser.equals(oldUser)) {
+      System.out.println("회원 정보 수정을 취소하였습니다.");
+    } else {
+      userList.set(index, newUser);
+      System.out.println("회원 정보를 수정하였습니다.");
     }
-    System.out.printf("비밀번호(%s) : ", u.getUserPW());
-    s = input.nextLine();
-    if(s.length() != 0) {
-      u.setUserPW(s);
-    }
-    System.out.printf("회원명(%s) : ", u.getUserName());
-    s = input.nextLine();
-    if(s.length() != 0) {
-      u.setUserName(s);
-    }
-    userList.set(index, u);
-    System.out.println("회원 정보를 수정하였습니다.");
     System.out.println();
   }
 
   public void deleteUser() {
-    System.out.print("회원 번호? ");
-    int index = indexOfUser(input.nextInt());
-    input.nextLine();
+    int index = indexOfUser(prompt.inputInt("회원 번호? "));
     if(index == -1) {
       System.out.println("해당하는 유저가 존재하지 않습니다.");
       System.out.println();
@@ -103,7 +91,7 @@ public class UserHandler {
     System.out.println("회원 정보를 삭제하였습니다.");
     System.out.println();
   }
-  
+
   private int indexOfUser(int num) {
     for (int i = 0 ; i < this.userList.getSize() ; i++) {
       if(this.userList.get(i).getUserNum() == num) {

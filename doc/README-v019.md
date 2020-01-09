@@ -133,9 +133,6 @@
     - 변경 기능을 수행하는 updateBoard()을 정의한다.
     - 삭제 기능을 수행하는 deleteBoard()을 정의한다.
     - 저장된 목록에서 회원 번호로 항목을 찾는 indexOfBoard()를 정의한다.
-- Board.java
-    - 인스턴스 복제를 할 수 있도록 java.lang.Cloneable 인터페이스를 구현한다.
-    - clone()을 오버라이딩 한다.
 - App.java
     - 상세조회, 변경, 삭제 명령에 대한 분기문을 추가한다.
 

@@ -1,7 +1,6 @@
 package julja.gms.Handler;
 
 import java.sql.Date;
-import java.util.Scanner;
 import julja.gms.domain.Board;
 import julja.util.ArrayList;
 import julja.util.Prompt;
@@ -25,10 +24,8 @@ public class BoardHandler {
   public void addBoard() {
     Board b = new Board();
     b.setBbsNum(boardList.getSize() + 1);
-    System.out.print("제목 : ");
-    b.setBbsName(input.nextLine());
-    System.out.print("내용 : ");
-    b.setBbsText(input.nextLine());
+    b.setBbsName(prompt.inputString("제목 : "));
+    b.setBbsText(prompt.inputString("내용 : "));
     b.setToday(new Date(System.currentTimeMillis()));
     b.setBbsHits(0);
     boardList.add(b);
@@ -46,10 +43,7 @@ public class BoardHandler {
   }
 
   public void detailBoard() {
-    System.out.print("게시글 번호 ? ");
-    int index = indexOfUser(input.nextInt());
-    input.nextLine();
-
+    int index = indexOfUser(prompt.inputInt("게시글 번호 ? "));
     if(index == -1) {
       System.out.println("유효한 게시물 번호가 아닙니다.");
     } else {
@@ -62,36 +56,33 @@ public class BoardHandler {
   }
 
   public void updateBoard() {
-    System.out.print("게시글 번호 ? ");
-    int index = indexOfUser(input.nextInt());
-    input.nextLine();
-
+    int index = indexOfUser(prompt.inputInt("게시글 번호 ? "));
     if(index == -1) {
       System.out.println("유효한 게시물 번호가 아닙니다.");
       System.out.println();
       return;
     }
-    Board board = this.boardList.get(index);
-    System.out.printf("내용(%s)? ", board.getBbsText());
-    String text = input.nextLine();
-    if (text.length() == 0) {
+    Board oldBoard = this.boardList.get(index);
+    Board newBoard = new Board();
+    newBoard.setBbsNum(oldBoard.getBbsNum());
+    System.out.println("제목 : " + oldBoard.getBbsName());
+    newBoard.setBbsName(oldBoard.getBbsName());
+    newBoard.setBbsText(prompt.inputString
+        (String.format("내용(%s)? ", oldBoard.getBbsText()), oldBoard.getBbsText()));
+    newBoard.setBbsHits(oldBoard.getBbsHits());
+    newBoard.setToday(new Date(System.currentTimeMillis()));
+    if(newBoard.equals(oldBoard)) {
       System.out.println("게시글 변경을 취소했습니다.");
-      System.out.println();
-      return;
-    }
-    board.setBbsText(text);
-    board.setToday(new Date(System.currentTimeMillis()));
-    this.boardList.set(index, board);
+    } else {
+    this.boardList.set(index, newBoard);
     System.out.println("게시글을 변경했습니다.");
+    }
     System.out.println();
 
   }
 
   public void deleteBoard() {
-    System.out.print("게시글 번호 ? ");
-    int index = indexOfUser(input.nextInt());
-    input.nextLine();
-
+    int index = indexOfUser(prompt.inputInt("게시글 번호 ? "));
     if(index == -1) {
       System.out.println("유효한 게시물 번호가 아닙니다.");
       System.out.println();
