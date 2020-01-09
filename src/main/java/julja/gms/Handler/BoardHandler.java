@@ -2,24 +2,18 @@ package julja.gms.Handler;
 
 import java.sql.Date;
 import julja.gms.domain.Board;
-import julja.util.ArrayList;
+import julja.util.LinkedList;
 import julja.util.Prompt;
 
 public class BoardHandler {
 
   Prompt prompt;
-  ArrayList<Board> boardList;
+  LinkedList<Board> boardList;
 
   public BoardHandler(Prompt prompt) {
     this.prompt = prompt;
-    boardList = new ArrayList<>();
+    boardList = new LinkedList<>();
   }
-
-  @SuppressWarnings({ "unchecked", "rawtypes" })
-  public BoardHandler(Prompt prompt, int capacity) {
-    this.prompt = prompt;
-    boardList = new ArrayList(capacity);
-  } 
 
   public void addBoard() {
     Board b = new Board();

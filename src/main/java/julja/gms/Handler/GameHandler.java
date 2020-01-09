@@ -1,17 +1,17 @@
 package julja.gms.Handler;
 
 import julja.gms.domain.Game;
-import julja.util.ArrayList;
+import julja.util.LinkedList;
 import julja.util.Prompt;
 
 public class GameHandler {
 
   Prompt prompt;
-  ArrayList<Game> gameList;
+  LinkedList<Game> gameList;
 
   public GameHandler (Prompt prompt) {
     this.prompt = prompt;
-    gameList = new ArrayList<>();
+    gameList = new LinkedList<>();
   }
 
   public void addGame() {
