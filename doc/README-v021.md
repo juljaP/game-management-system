@@ -21,13 +21,13 @@
 #### 실행 결과
 
 ```
-명령> /lesson/list
+명령> /Game/list
 ...
 
-명령> /lesson/add
+명령> /Game/add
 ...
 
-명령> /member/list
+명령> /User/list
 ...
 
 명령> /board/detail
@@ -35,14 +35,14 @@
 
 명령> history
 /board/detail
-/member/list
-/lesson/add
-/lesson/list
+/User/list
+/Game/add
+/Game/list
 
 ```
 
 
 ## 실습 소스
 
-- src/main/java/com/eomcs/util/Stack.java 추가
-- src/main/java/com/eomcs/lms/App.java 변경
+- src/main/java/julja/util/Stack.java 추가
+- src/main/java/julja/util/App.java 변경

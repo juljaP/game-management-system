@@ -5,6 +5,7 @@ import julja.gms.Handler.BoardHandler;
 import julja.gms.Handler.GameHandler;
 import julja.gms.Handler.UserHandler;
 import julja.util.Prompt;
+import julja.util.Queue;
 import julja.util.Stack;
 
 public class App {
@@ -12,6 +13,7 @@ public class App {
   static Scanner sc = new Scanner(System.in);
   static final int SIZE = 100;
   static Stack<String> stack = new Stack<>();
+  static Queue<String> queue = new Queue<>();
 
   public static void main(String[] args) {
 
@@ -29,6 +31,7 @@ public class App {
       }
 
       stack.push(command);
+      queue.offer(command);
 
       switch (command) {
         case "/game/add" :
@@ -79,6 +82,9 @@ public class App {
         case "history" :
           printCommandHistory();
           break;
+        case "history2" :
+          printCommandHistory2();
+          break;
         case "quit" : 
           sc.close();
           System.out.println("안녕!");
@@ -90,6 +96,7 @@ public class App {
       }
     }
   }
+
 
   private static void printCommandHistory() {
     Stack<String> historyStack = stack.clone();
@@ -107,13 +114,27 @@ public class App {
     }
     System.out.println();
   }
-
+  
+  private static void printCommandHistory2() {
+  Queue<String> historyQueue = queue.clone();
+  int count = 0;
+  String answer = null;
+  for(int i = 0 ; i < queue.getSize() ; i++) {
+    System.out.println(historyQueue.poll());
+    if(++count % 5 == 0) {
+      System.out.print(": ");
+      answer = sc.nextLine();
+      if(answer.equalsIgnoreCase("q")) {
+        break;
+      }
+    }
+  }
+  System.out.println();
+  }
+  
   private static String prompt() {
     System.out.print("명령> ");
     String command = sc.nextLine();
     return command;
   }
-
-
-
 }
