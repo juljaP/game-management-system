@@ -2,7 +2,7 @@ package julja.util;
 
 import java.util.Arrays;
 
-public class ArrayList<E> {
+public class ArrayList<E> extends AbstractList<E> {
 
   private static final int DEFAULT_CAPACITY = 100;
   private int size = 0;
@@ -32,14 +32,18 @@ public class ArrayList<E> {
     return arr;
   }
 
+  public Object[] toArray() {
+    return Arrays.copyOf(this.list, this.size);
+  }
 
-  public void add(E obj) {
+
+  public void add(E e) {
     if (this.list.length == this.size) {
       int oldC = this.list.length;
       int newC = oldC + (oldC >> 1);
       Arrays.copyOf(this.list, newC);
     }
-    this.list[this.size++] = obj;
+    this.list[this.size++] = e;
   }
 
   @SuppressWarnings("unchecked")
@@ -52,12 +56,12 @@ public class ArrayList<E> {
   }
 
   @SuppressWarnings("unchecked")
-  public E set(int index, E obj) {
+  public E set(int index, E e) {
     if (index < 0 || index >= this.size) {
       return null;
     }
     E old = (E) this.list[index];
-    this.list[index] = obj;
+    this.list[index] = e;
     return old;
   }
 

@@ -2,17 +2,17 @@ package julja.gms.Handler;
 
 import java.sql.Date;
 import julja.gms.domain.Board;
-import julja.util.LinkedList;
+import julja.util.AbstractList;
 import julja.util.Prompt;
 
 public class BoardHandler {
 
   Prompt prompt;
-  LinkedList<Board> boardList;
+  AbstractList<Board> boardList;
 
-  public BoardHandler(Prompt prompt) {
+  public BoardHandler(Prompt prompt, AbstractList<Board> list) {
     this.prompt = prompt;
-    boardList = new LinkedList<>();
+    boardList = list;
   }
 
   public void addBoard() {
@@ -28,7 +28,7 @@ public class BoardHandler {
   }
 
   public void listBoard() {
-    Board[] arr = boardList.toArray(new Board[] {});
+    Board[] arr = (Board[]) boardList.toArray(new Board[] {});
     for (Board b : arr) {
       System.out.printf("[%d] %s | %s | %d \n",
           b.getBbsNum(), b.getBbsName(), b.getBbsText(), b.getBbsHits());

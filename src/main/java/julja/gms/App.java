@@ -4,6 +4,11 @@ import java.util.Scanner;
 import julja.gms.Handler.BoardHandler;
 import julja.gms.Handler.GameHandler;
 import julja.gms.Handler.UserHandler;
+import julja.gms.domain.Board;
+import julja.gms.domain.Game;
+import julja.gms.domain.User;
+import julja.util.ArrayList;
+import julja.util.LinkedList;
 import julja.util.Prompt;
 import julja.util.Queue;
 import julja.util.Stack;
@@ -18,10 +23,14 @@ public class App {
   public static void main(String[] args) {
 
     Prompt prompt = new Prompt(sc);
+    
+    ArrayList<Game> gameList = new ArrayList<>();
+    ArrayList<Board> boardList = new ArrayList<>();
+    LinkedList<User> userList = new LinkedList<>();
 
-    GameHandler gh = new GameHandler(prompt);
-    UserHandler uh = new UserHandler(prompt);
-    BoardHandler bh = new BoardHandler(prompt);
+    GameHandler gh = new GameHandler(prompt, gameList);
+    UserHandler uh = new UserHandler(prompt, userList);
+    BoardHandler bh = new BoardHandler(prompt, boardList);
 
     while (true) {
       String command = prompt();

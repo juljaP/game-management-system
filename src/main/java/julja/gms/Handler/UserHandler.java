@@ -2,17 +2,17 @@ package julja.gms.Handler;
 
 import java.sql.Date;
 import julja.gms.domain.User;
-import julja.util.LinkedList;
+import julja.util.AbstractList;
 import julja.util.Prompt;
 
 public class UserHandler {
 
   Prompt prompt;
-  LinkedList<User> userList;
+  AbstractList<User> userList;
 
-  public UserHandler(Prompt prompt) {
+  public UserHandler(Prompt prompt, AbstractList<User> list) {
     this.prompt = prompt;
-    userList = new LinkedList<>();
+    userList = list;
   }
 
   public void addUser() {
@@ -31,7 +31,7 @@ public class UserHandler {
   }
 
   public void listUser() {
-    User[] arr = userList.toArray(new User[] {});
+    User[] arr = (User[]) userList.toArray(new User[] {});
     for (User u : arr) {
       System.out.printf("[%d] %s | %s | %s\n", 
           u.getUserNum(), u.getUserEmail(), u.getUserName(), u.getUserResisteredDate());

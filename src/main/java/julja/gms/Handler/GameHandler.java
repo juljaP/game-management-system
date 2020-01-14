@@ -1,17 +1,17 @@
 package julja.gms.Handler;
 
 import julja.gms.domain.Game;
-import julja.util.LinkedList;
+import julja.util.AbstractList;
 import julja.util.Prompt;
 
 public class GameHandler {
 
   Prompt prompt;
-  LinkedList<Game> gameList;
+  AbstractList<Game> gameList;
 
-  public GameHandler (Prompt prompt) {
+  public GameHandler (Prompt prompt, AbstractList<Game> list) {
     this.prompt = prompt;
-    gameList = new LinkedList<>();
+    gameList = list;
   }
 
   public void addGame() {
@@ -30,7 +30,7 @@ public class GameHandler {
   }
 
   public void listGame() {
-    Game[] arr = gameList.toArray(new Game[] {});
+    Game[] arr = (Game[]) gameList.toArray(new Game[] {});
     for(Game g : arr) {
       System.out.printf("[%d] %s | %s | %s | %s\n", 
           g.getGameNum(), g.getGameName(), g.getGameProduction(), g.getGameDate(), g.getGameGenre());
