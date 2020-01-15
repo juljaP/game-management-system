@@ -1,17 +1,16 @@
 package julja.util;
 
 // offer, poll, clone
-public class Queue<E> extends LinkedList<Object> implements Cloneable { 
+public class Queue<E> extends LinkedList<E> implements Cloneable { 
 
   public void offer(E value) {
     this.add(value);
   }
 
-  public Object poll() {
+  public E poll() {
     return this.remove(0);
   }
 
-  @SuppressWarnings("unchecked")
   @Override
   public Queue<E> clone() {
     Queue<E> temp = new Queue<>();
@@ -19,6 +18,10 @@ public class Queue<E> extends LinkedList<Object> implements Cloneable {
       temp.offer((E) this.get(i));
     }
     return temp;
+  }
+  
+  public Iterator<E> iterator() {
+    return new QueueIterator<>(this);
   }
 
 }

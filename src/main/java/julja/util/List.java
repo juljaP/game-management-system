@@ -8,5 +8,7 @@ public interface List<E> {
   E remove(int index) ;
   E[] toArray(E[] arr);
   Object[] toArray();
+  int size();
+  Iterator<E> iterator();
 
 }

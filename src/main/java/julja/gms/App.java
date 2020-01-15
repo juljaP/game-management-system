@@ -8,6 +8,7 @@ import julja.gms.domain.Board;
 import julja.gms.domain.Game;
 import julja.gms.domain.User;
 import julja.util.ArrayList;
+import julja.util.Iterator;
 import julja.util.LinkedList;
 import julja.util.Prompt;
 import julja.util.Queue;
@@ -89,10 +90,10 @@ public class App {
           bh.deleteBoard();
           break;
         case "history" :
-          printCommandHistory();
+          printCommandHistory(stack.iterator());
           break;
         case "history2" :
-          printCommandHistory2();
+          printCommandHistory(queue.iterator());
           break;
         case "quit" : 
           sc.close();
@@ -107,12 +108,12 @@ public class App {
   }
 
 
-  private static void printCommandHistory() {
-    Stack<String> historyStack = stack.clone();
+  private static void printCommandHistory(Iterator<String> iter) {
+    Iterator<String> iterator = iter;
     int count = 0;
     String answer = null;
-    while(!historyStack.empty()) {
-      System.out.println(historyStack.pop());
+    while(iterator.hasNext()) {
+      System.out.println(iterator.next());
       if(++count % 5 == 0) {
         System.out.print(": ");
         answer = sc.nextLine();
@@ -122,23 +123,6 @@ public class App {
       }
     }
     System.out.println();
-  }
-  
-  private static void printCommandHistory2() {
-  Queue<String> historyQueue = queue.clone();
-  int count = 0;
-  String answer = null;
-  for(int i = 0 ; i < queue.getSize() ; i++) {
-    System.out.println(historyQueue.poll());
-    if(++count % 5 == 0) {
-      System.out.print(": ");
-      answer = sc.nextLine();
-      if(answer.equalsIgnoreCase("q")) {
-        break;
-      }
-    }
-  }
-  System.out.println();
   }
   
   private static String prompt() {

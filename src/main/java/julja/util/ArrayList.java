@@ -19,7 +19,7 @@ public class ArrayList<E> extends AbstractList<E> {
       this.list = new Object[capacity];
   }
 
-  public int getSize() {
+  public int size() {
     return this.size;
   }
 

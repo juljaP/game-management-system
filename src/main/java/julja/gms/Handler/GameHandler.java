@@ -1,15 +1,16 @@
 package julja.gms.Handler;
 
 import julja.gms.domain.Game;
-import julja.util.AbstractList;
+import julja.util.Iterator;
+import julja.util.List;
 import julja.util.Prompt;
 
 public class GameHandler {
 
   Prompt prompt;
-  AbstractList<Game> gameList;
+  List<Game> gameList;
 
-  public GameHandler (Prompt prompt, AbstractList<Game> list) {
+  public GameHandler (Prompt prompt, List<Game> list) {
     this.prompt = prompt;
     gameList = list;
   }
@@ -30,8 +31,9 @@ public class GameHandler {
   }
 
   public void listGame() {
-    Game[] arr = (Game[]) gameList.toArray(new Game[] {});
-    for(Game g : arr) {
+    Iterator<Game> iterator = gameList.iterator();
+    while(iterator.hasNext()) {
+      Game g = iterator.next();
       System.out.printf("[%d] %s | %s | %s | %s\n", 
           g.getGameNum(), g.getGameName(), g.getGameProduction(), g.getGameDate(), g.getGameGenre());
     }
@@ -105,7 +107,7 @@ public class GameHandler {
   }
 
   private int indexOfLesson(int num) {
-    for (int i = 0 ; i < this.gameList.getSize() ; i++) {
+    for (int i = 0 ; i < this.gameList.size() ; i++) {
       if(this.gameList.get(i).getGameNum() == num) {
         return i;
       }

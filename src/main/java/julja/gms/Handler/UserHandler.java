@@ -2,22 +2,23 @@ package julja.gms.Handler;
 
 import java.sql.Date;
 import julja.gms.domain.User;
-import julja.util.AbstractList;
+import julja.util.Iterator;
+import julja.util.List;
 import julja.util.Prompt;
 
 public class UserHandler {
 
   Prompt prompt;
-  AbstractList<User> userList;
+  List<User> userList;
 
-  public UserHandler(Prompt prompt, AbstractList<User> list) {
+  public UserHandler(Prompt prompt, List<User> list) {
     this.prompt = prompt;
     userList = list;
   }
 
   public void addUser() {
     User u = new User();
-    u.setUserNum(userList.getSize()+1); 
+    u.setUserNum(userList.size()+1); 
 
     u.setUserEmail(prompt.inputString("이메일 : "));
     u.setUserPW(prompt.inputString("비밀번호 : "));
@@ -31,8 +32,9 @@ public class UserHandler {
   }
 
   public void listUser() {
-    User[] arr = (User[]) userList.toArray(new User[] {});
-    for (User u : arr) {
+    Iterator<User> iterator = userList.iterator();
+    while (iterator.hasNext()) {
+      User u = iterator.next();
       System.out.printf("[%d] %s | %s | %s\n", 
           u.getUserNum(), u.getUserEmail(), u.getUserName(), u.getUserResisteredDate());
     }
@@ -93,7 +95,7 @@ public class UserHandler {
   }
 
   private int indexOfUser(int num) {
-    for (int i = 0 ; i < this.userList.getSize() ; i++) {
+    for (int i = 0 ; i < this.userList.size() ; i++) {
       if(this.userList.get(i).getUserNum() == num) {
         return i;
       }

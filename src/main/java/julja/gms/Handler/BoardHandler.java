@@ -2,22 +2,23 @@ package julja.gms.Handler;
 
 import java.sql.Date;
 import julja.gms.domain.Board;
-import julja.util.AbstractList;
+import julja.util.Iterator;
+import julja.util.List;
 import julja.util.Prompt;
 
 public class BoardHandler {
 
   Prompt prompt;
-  AbstractList<Board> boardList;
+  List<Board> boardList;
 
-  public BoardHandler(Prompt prompt, AbstractList<Board> list) {
+  public BoardHandler(Prompt prompt, List<Board> list) {
     this.prompt = prompt;
     boardList = list;
   }
 
   public void addBoard() {
     Board b = new Board();
-    b.setBbsNum(boardList.getSize() + 1);
+    b.setBbsNum(boardList.size() + 1);
     b.setBbsName(prompt.inputString("제목 : "));
     b.setBbsText(prompt.inputString("내용 : "));
     b.setToday(new Date(System.currentTimeMillis()));
@@ -28,8 +29,9 @@ public class BoardHandler {
   }
 
   public void listBoard() {
-    Board[] arr = (Board[]) boardList.toArray(new Board[] {});
-    for (Board b : arr) {
+    Iterator<Board> iterator = boardList.iterator();
+    while(iterator.hasNext()) {
+      Board b = iterator.next();
       System.out.printf("[%d] %s | %s | %d \n",
           b.getBbsNum(), b.getBbsName(), b.getBbsText(), b.getBbsHits());
     }
@@ -88,7 +90,7 @@ public class BoardHandler {
   }
   
   private int indexOfUser(int num) {
-    for (int i = 0 ; i < this.boardList.getSize() ; i++) {
+    for (int i = 0 ; i < this.boardList.size() ; i++) {
       if(this.boardList.get(i).getBbsNum() == num) {
         return i;
       }
