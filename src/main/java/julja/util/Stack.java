@@ -55,15 +55,16 @@ public class Stack<E> implements Cloneable{
   }
   
   public Iterator<E> iterator() {
-    return new StackIterator<>(this);
+    return this.new StackIterator<>();
   }
   
-  static class StackIterator<T> implements Iterator<T> {
+    class StackIterator<T> implements Iterator<T> {
     
     Stack<T> stack;
     
-    public StackIterator(Stack<T> stack) {
-      this.stack = stack.clone();
+    @SuppressWarnings("unchecked")
+    public StackIterator() {
+      this.stack = (Stack<T>)Stack.this.clone();
     }
 
     public boolean hasNext() {

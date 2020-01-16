@@ -21,15 +21,16 @@ public class Queue<E> extends LinkedList<E> implements Cloneable {
   }
   
   public Iterator<E> iterator() {
-    return new QueueIterator<>(this);
+    return this.new QueueIterator<>();
   }
   
-  static class QueueIterator<T> implements Iterator<T> {
+    class QueueIterator<T> implements Iterator<T> {
     
     Queue<T> queue;
     
-    public QueueIterator(Queue<T> queue) {
-      this.queue = queue.clone();
+    @SuppressWarnings("unchecked")
+    public QueueIterator() {
+      this.queue = (Queue<T>) Queue.this.clone();
     }
 
     public boolean hasNext() {
