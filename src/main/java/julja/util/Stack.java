@@ -53,7 +53,7 @@ public class Stack<E> implements Cloneable{
       return null;
     }
   }
-  
+   
   public Iterator<E> iterator() {
     class StackIterator<T> implements Iterator<T> {
       

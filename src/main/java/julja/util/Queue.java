@@ -19,7 +19,7 @@ public class Queue<E> extends LinkedList<E> implements Cloneable {
     }
     return temp;
   }
-  
+   
   public Iterator<E> iterator() {
     class QueueIterator<T> implements Iterator<T> {
       
