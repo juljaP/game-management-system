@@ -6,28 +6,21 @@ public abstract class AbstractList<E> implements List<E>{
   public int size() {
     return this.size;
   } 
+
   public Iterator<E> iterator() {
-    
-    class ListIterator<T> implements Iterator<T>{
-      
-      List<T> list;
+
+    return new Iterator<E>() {
+      List<E> list = (List<E>)AbstractList.this;
       int cursor;
-      
-      @SuppressWarnings("unchecked")
-      public ListIterator() {
-        this.list = (List<T>)AbstractList.this;
-      }
-      
+
       public boolean hasNext() {
         return list.size() > cursor;
       }
-      
-      public T next() {
+
+      public E next() {
         return list.get(cursor++);
       }
-    }
-    
-    return new ListIterator<>();
+    };
   }
-  
+
 }
