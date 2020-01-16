@@ -23,10 +23,10 @@
 - src/main/java/com/eomcs/util/List.java 추가
 - src/main/java/com/eomcs/util/ArrayList.java 변경
 - src/main/java/com/eomcs/util/LinkedList.java 변경
-- src/main/java/com/eomcs/lms/handler/LessonHandler.java 변경
-- src/main/java/com/eomcs/lms/handler/MemberHandler.java 변경
-- src/main/java/com/eomcs/lms/handler/BoardHandler.java 변경
-- src/main/java/com/eomcs/lms/App.java 변경
+- src/main/java/com/eomcs/gms/handler/LessonHandler.java 변경
+- src/main/java/com/eomcs/gms/handler/MemberHandler.java 변경
+- src/main/java/com/eomcs/gms/handler/BoardHandler.java 변경
+- src/main/java/com/eomcs/gms/App.java 변경
 
 ## 실습
 

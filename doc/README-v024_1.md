@@ -6,14 +6,14 @@
 - src/main/java/julja/util/ListIterator.java 추가
 - src/main/java/julja/util/List.java 변경
 - src/main/java/julja/util/AbstractList.java 변경
-- src/main/java/julja/lms/handler/GameHandler.java 변경
-- src/main/java/julja/lms/handler/UserHandler.java 변경
-- src/main/java/julja/lms/handler/BoardHandler.java 변경
+- src/main/java/julja/gms/handler/GameHandler.java 변경
+- src/main/java/julja/gms/handler/UserHandler.java 변경
+- src/main/java/julja/gms/handler/BoardHandler.java 변경
 - src/main/java/julja/util/StackIterator.java 추가
 - src/main/java/julja/util/Stack.java 변경
 - src/main/java/julja/util/QueueIterator.java 추가
 - src/main/java/julja/util/Queue.java 변경
-- src/main/java/julja/lms/App.java 변경
+- src/main/java/julja/gms/App.java 변경
 
 
 ## 실습

@@ -1,5 +1,11 @@
 package julja.gms;
 
+import java.util.ArrayDeque;
+import java.util.ArrayList;
+import java.util.Deque;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.Scanner;
 import julja.gms.Handler.BoardHandler;
 import julja.gms.Handler.GameHandler;
@@ -7,19 +13,14 @@ import julja.gms.Handler.UserHandler;
 import julja.gms.domain.Board;
 import julja.gms.domain.Game;
 import julja.gms.domain.User;
-import julja.util.ArrayList;
-import julja.util.Iterator;
-import julja.util.LinkedList;
 import julja.util.Prompt;
-import julja.util.Queue;
-import julja.util.Stack;
 
 public class App {
 
   static Scanner sc = new Scanner(System.in);
   static final int SIZE = 100;
-  static Stack<String> stack = new Stack<>();
-  static Queue<String> queue = new Queue<>();
+  static Deque<String> stack = new ArrayDeque<>();
+  static Queue<String> queue = new LinkedList<>();
 
   public static void main(String[] args) {
 

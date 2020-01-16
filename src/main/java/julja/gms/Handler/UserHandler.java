@@ -1,9 +1,9 @@
 package julja.gms.Handler;
 
 import java.sql.Date;
+import java.util.Iterator;
+import java.util.List;
 import julja.gms.domain.User;
-import julja.util.Iterator;
-import julja.util.List;
 import julja.util.Prompt;
 
 public class UserHandler {
