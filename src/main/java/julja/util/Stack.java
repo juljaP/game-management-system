@@ -57,5 +57,23 @@ public class Stack<E> implements Cloneable{
   public Iterator<E> iterator() {
     return new StackIterator<>(this);
   }
+  
+  static class StackIterator<T> implements Iterator<T> {
+    
+    Stack<T> stack;
+    
+    public StackIterator(Stack<T> stack) {
+      this.stack = stack.clone();
+    }
+
+    public boolean hasNext() {
+      return !stack.empty();
+    }
+
+    public T next() {
+      return stack.pop();
+    }
+
+  }
 
 }
