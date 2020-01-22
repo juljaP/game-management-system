@@ -26,7 +26,6 @@ public class GameAddCommand implements Command {
     g.setGameIllust(prompt.inputString("작화 : "));
     g.setGameVoice(prompt.inputString("음성 : "));
     System.out.println("저장하였습니다.");
-    System.out.println();
     gameList.add(g);
   }
 

@@ -20,7 +20,6 @@ public class GameListCommand implements Command {
       System.out.printf("[%d] %s | %s | %s | %s\n", g.getGameNum(), g.getGameName(),
           g.getGameProduction(), g.getGameDate(), g.getGameGenre());
     }
-    System.out.println();
   }
 
 }
