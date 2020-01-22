@@ -20,7 +20,6 @@ public class GameDetailCommand implements Command {
     Game g = this.gameList.get(index);
     if (index == -1) {
       System.out.println("해당하는 게임이 존재하지 않습니다.");
-      System.out.println();
       return;
     }
     System.out.printf("게임명 : %s\n", g.getGameName());
@@ -30,7 +29,6 @@ public class GameDetailCommand implements Command {
     System.out.printf("장르 : %s\n", g.getGameGenre());
     System.out.printf("작화 : %s\n", g.getGameIllust());
     System.out.printf("음성 : %s\n", g.getGameVoice());
-    System.out.println();
   }
 
   private int indexOfLesson(int num) {

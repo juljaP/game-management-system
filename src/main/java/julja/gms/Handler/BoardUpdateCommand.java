@@ -20,7 +20,6 @@ public class BoardUpdateCommand implements Command {
     int index = indexOfUser(prompt.inputInt("게시글 번호 ? "));
     if (index == -1) {
       System.out.println("유효한 게시물 번호가 아닙니다.");
-      System.out.println();
       return;
     }
     Board oldBoard = this.boardList.get(index);
@@ -38,7 +37,6 @@ public class BoardUpdateCommand implements Command {
       this.boardList.set(index, newBoard);
       System.out.println("게시글을 변경했습니다.");
     }
-    System.out.println();
   }
 
   private int indexOfUser(int num) {

@@ -25,7 +25,6 @@ public class BoardAddCommand implements Command {
     b.setBbsHits(0);
     boardList.add(b);
     System.out.println("저장하였습니다.");
-    System.out.println();
   }
 
 }

@@ -20,6 +20,5 @@ public class BoardListCommand implements Command {
       System.out.printf("[%d] %s | %s | %d \n", b.getBbsNum(), b.getBbsName(), b.getBbsText(),
           b.getBbsHits());
     }
-    System.out.println();
   }
 }

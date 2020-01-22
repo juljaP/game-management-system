@@ -20,7 +20,6 @@ public class GameUpdateCommand implements Command {
     int index = indexOfLesson(prompt.inputInt("게임 품번? : "));
     if (index == -1) {
       System.out.println("해당하는 게임이 존재하지 않습니다.");
-      System.out.println();
       return;
     }
     Game oldGame = this.gameList.get(index);
@@ -48,7 +47,6 @@ public class GameUpdateCommand implements Command {
       gameList.set(index, newGame);
       System.out.println("게임 정보를 변경했습니다.");
     }
-    System.out.println();
   }
 
   private int indexOfLesson(int num) {

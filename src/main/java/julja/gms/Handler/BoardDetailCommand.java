@@ -25,7 +25,6 @@ public class BoardDetailCommand implements Command {
       System.out.println("내용 : " + b.getBbsText());
       System.out.println("조회수 : " + b.getBbsHits());
     }
-    System.out.println();
   }
 
   private int indexOfUser(int num) {

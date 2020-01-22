@@ -20,7 +20,6 @@ public class UserListCommand implements Command {
       System.out.printf("[%d] %s | %s | %s\n", u.getUserNum(), u.getUserEmail(), u.getUserName(),
           u.getUserResisteredDate());
     }
-    System.out.println();
   }
 
 }

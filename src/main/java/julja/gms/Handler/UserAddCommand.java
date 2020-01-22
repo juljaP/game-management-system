@@ -28,7 +28,6 @@ public class UserAddCommand implements Command {
     System.out.println(u.getUserResisteredDate());
     userList.add(u);
     System.out.println("저장하였습니다.");
-    System.out.println();
   }
 
   private int indexOfUser(int num) {

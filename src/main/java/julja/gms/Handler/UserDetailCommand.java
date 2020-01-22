@@ -19,7 +19,6 @@ public class UserDetailCommand implements Command {
     int index = indexOfUser(prompt.inputInt("회원 번호? "));
     if (index == -1) {
       System.out.println("해당하는 유저가 존재하지 않습니다.");
-      System.out.println();
       return;
     }
     User u = userList.get(index);
@@ -27,7 +26,6 @@ public class UserDetailCommand implements Command {
     System.out.printf("비밀번호 : %s\n", u.getUserPW());
     System.out.printf("회원명 : %s\n", u.getUserName());
     System.out.printf("가입일 : %s\n", u.getUserResisteredDate());
-    System.out.println();
   }
 
   private int indexOfUser(int num) {

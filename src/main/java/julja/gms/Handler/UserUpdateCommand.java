@@ -19,7 +19,6 @@ public class UserUpdateCommand implements Command {
     int index = indexOfUser(prompt.inputInt("회원 번호? "));
     if (index == -1) {
       System.out.println("해당하는 유저가 존재하지 않습니다.");
-      System.out.println();
       return;
     }
     User oldUser = userList.get(index);
@@ -38,7 +37,6 @@ public class UserUpdateCommand implements Command {
       userList.set(index, newUser);
       System.out.println("회원 정보를 수정하였습니다.");
     }
-    System.out.println();
   }
 
   private int indexOfUser(int num) {
