@@ -1,35 +1,51 @@
-# 28_2 - 파일 입출력 API의 활용 + CSV 문자열을 객체로 전환하는 기능을 도메인 객체로 이전 
+# 28_3 JSON 적용
 
-##결과
+## 학습 목표 
 
-- src/main/java/julja/gms/lms/App.java 변경
-- src/main/java/julja/gms/domain/Board.java 변경
-- src/main/java/julja/gms/domain/User.java 변경
-- src/main/java/julja/gms/domain/Game.java 변경 
+- JSON 포맷 사용 이점 이해
+- Google JSON 라이브러리 사용 
 
-### 1: 게시물 데이터를 CSV 문자열로 다루는 코드를 Board 클래스로 옮겨라.  
+## JSON 데이터 포맷 특징
+- 문자열로 데이터 표현
+- '프로퍼티:값' 방식
+- 바이너리 방식에 비해 데이터가 큰 문제가 있지만, 
+- 문자열이기 때문에 모든 프로그래밍 언어에서 다룰 수 있다
+-> 이기종 플랫폼(OS, 프로그래밍 언어 등) 간에 데이터 교환할 때 많이 사용
 
-- Board.java
-  - CSV 문자열을 가지고 Board 객체를 생성하는 valueOf() 를 추가한다.
-  - Board 객체를 가지고 CSV 문자열을 리턴하는 toCsvString() 를 추가한다.
-- App.java
-  - loadBoardData() 를 변경한다.
-  - saveBoardData() 를 변경한다.
+## 실습 소스 및 결과
 
-### 2: 유저 데이터를 CSV 문자열로 다루는 코드를 User 클래스로 옮겨라.  
-
-- User.java
-  - CSV 문자열을 가지고 User 객체를 생성하는 valueOf() 를 추가한다.
-  - User 객체를 가지고 CSV 문자열을 리턴하는 toCsvString() 를 추가한다.
-- App.java
-  - loadUserData() 를 변경한다.
-  - saveUserData() 를 변경한다.
+- src/main/java/julja/gms/App.java 변경
+- build.gradle 변경
   
-### 3: 게임 데이터를 CSV 문자열로 다루는 코드를 Game 클래스로 옮겨라.  
+## 실습  
 
-- Board.java
-  - CSV 문자열을 가지고 Game 객체를 생성하는 valueOf() 를 추가한다.
-  - Game 객체를 가지고 CSV 문자열을 리턴하는 toCsvString() 를 추가한다.
+### 훈련 1: Gradle 스크립트 파일(build.gradle)에 Google JSON라이브러리 추가
+- mvnrepository.com에서 라이브러리 검색
+  - json.org 사이트에서 자바 라이브러리 확인
+  - 'gson' 검색
+-build.gradle 편집
+  - 의존 라이브러리 블록에 gson 정보 추가 : compile group: 'com.google.code.gson', name: 'gson', version: '2.8.6'
+- 이클립스 설정 파일 갱신
+  - 'gradle eclipse' 실행 후 프로젝트 refresh
+  - 'Referenced Libraries' 노드에서 gson 라이브러리 파일이 추가된 것을 확인
+  
+### 훈련 2: 게시물 데이터 저장 시, JSON 형식으로 저장
+
 - App.java
-  - loadGameData() 를 변경한다.
-  - saveGameData() 를 변경한다.
+  - saveBoardData() 변경
+  - loadBoardData() 변경
+  
+### 훈련 3: 멤버 데이터 저장 시, JSON 형식으로 저장
+
+- App.java
+  - saveUserData() 변경
+  - loadUserData() 변경
+  
+### 훈련 4: 수업 데이터 저장 시, JSON 형식으로 저장
+
+- App.java
+  - saveGameData() 변경
+  - loadGameData() 변경
+  
+### 훈련 5: Arrays 메서드를 활용하여 배열을 List 객체로 만들기
+- App.java 변경
