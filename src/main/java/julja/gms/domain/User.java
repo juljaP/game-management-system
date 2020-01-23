@@ -3,41 +3,67 @@ package julja.gms.domain;
 import java.sql.Date;
 
 public class User {
-  
+
   private int userNum;
   private String userEmail, userPW, userName;
   private Date userResisteredDate;
-  
+
+  public static User valueOf(String csv) {
+    String[] data = csv.split(", ");
+    User user = new User();
+    user.setUserNum(Integer.parseInt(data[0]));
+    user.setUserEmail(data[1]);
+    user.setUserPW(data[2]);
+    user.setUserName(data[3]);
+    user.setUserResisteredDate(Date.valueOf(data[4]));
+    return user;
+  }
+
+  public String toCsvString() {
+    return String.format("%d, %s, %s, %s, %s", this.getUserNum(), this.getUserEmail(),
+        this.getUserPW(), this.getUserName(), this.getUserResisteredDate());
+  }
+
   public int getUserNum() {
     return userNum;
   }
+
   public void setUserNum(int userNum) {
     this.userNum = userNum;
   }
+
   public String getUserEmail() {
     return userEmail;
   }
+
   public void setUserEmail(String userEmail) {
     this.userEmail = userEmail;
   }
+
   public String getUserPW() {
     return userPW;
   }
+
   public void setUserPW(String userPW) {
     this.userPW = userPW;
   }
+
   public String getUserName() {
     return userName;
   }
+
   public void setUserName(String userName) {
     this.userName = userName;
   }
+
   public Date getUserResisteredDate() {
     return userResisteredDate;
   }
+
   public void setUserResisteredDate(Date userResisteredDate) {
     this.userResisteredDate = userResisteredDate;
   }
+
   @Override
   public int hashCode() {
     final int prime = 31;
@@ -48,6 +74,7 @@ public class User {
     result = prime * result + ((userPW == null) ? 0 : userPW.hashCode());
     return result;
   }
+
   @Override
   public boolean equals(Object obj) {
     if (this == obj)
