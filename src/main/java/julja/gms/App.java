@@ -1,11 +1,14 @@
 package julja.gms;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.sql.Date;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Deque;
@@ -15,7 +18,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 import java.util.Scanner;
-import com.google.gson.Gson;
 import julja.gms.Handler.BoardAddCommand;
 import julja.gms.Handler.BoardDeleteCommand;
 import julja.gms.Handler.BoardDetailCommand;
@@ -128,11 +130,20 @@ public class App {
   }
 
   private static void loadGameData() {
-    File file = new File("./game.json");
-    try (BufferedReader in = new BufferedReader(new FileReader(file))) {
-      Gson gson = new Gson();
-      Game[] games = gson.fromJson(in, Game[].class);
-      for (Game game : games) {
+    File file = new File("./game.data");
+    try (DataInputStream in =
+        new DataInputStream(new BufferedInputStream(new FileInputStream(file)))) {
+      int size = in.readInt();
+      for (int i = 0; i < size; i++) {
+        Game game = new Game();
+        game.setGameNum(in.readInt());
+        game.setGameName(in.readUTF());
+        game.setGameProduction(in.readUTF());
+        game.setGameDate(Date.valueOf(in.readUTF()));
+        game.setGamePlatform(in.readUTF());
+        game.setGameGenre(in.readUTF());
+        game.setGameIllust(in.readUTF());
+        game.setGameVoice(in.readUTF());
         App.gameList.add(game);
       }
       System.out.printf("%d개의 게임 데이터, ", App.gameList.size());
@@ -143,10 +154,17 @@ public class App {
 
   private static void loadUserData() {
 
-    File file = new File("./user.json");
-    try (BufferedReader in = new BufferedReader(new FileReader(file))) {
-      User[] users = new Gson().fromJson(in, User[].class);
-      for (User user : users) {
+    File file = new File("./user.data");
+    try (DataInputStream in =
+        new DataInputStream(new BufferedInputStream(new FileInputStream(file)))) {
+      int size = in.readInt();
+      for (int i = 0; i < size; i++) {
+        User user = new User();
+        user.setUserNum(in.readInt());
+        user.setUserEmail(in.readUTF());
+        user.setUserPW(in.readUTF());
+        user.setUserName(in.readUTF());
+        user.setUserResisteredDate(Date.valueOf(in.readUTF()));
         App.userList.add(user);
       }
       System.out.printf("%d개의 유저 데이터, ", App.userList.size());
@@ -156,11 +174,17 @@ public class App {
   }
 
   private static void loadBoardData() {
-    File file = new File("./board.json");
-    try (BufferedReader in = new BufferedReader(new FileReader(file))) {
-      Gson gson = new Gson();
-      Board[] boards = (gson.fromJson(in, Board[].class));
-      for (Board board : boards) {
+    File file = new File("./board.data");
+    try (DataInputStream in =
+        new DataInputStream(new BufferedInputStream(new FileInputStream(file)))) {
+      int size = in.readInt();
+      for (int i = 0; i < size; i++) {
+        Board board = new Board();
+        board.setBbsNum(in.readInt());
+        board.setBbsName(in.readUTF());
+        board.setBbsText(in.readUTF());
+        board.setToday(Date.valueOf(in.readUTF()));
+        board.setBbsHits(in.readInt());
         App.boardList.add(board);
       }
       System.out.printf("%d개의 게시글 데이터를 로딩했습니다.\n", App.boardList.size());
@@ -170,9 +194,20 @@ public class App {
   }
 
   private static void saveGameData() {
-    File file = new File("./game.json");
-    try (BufferedWriter out = new BufferedWriter(new FileWriter(file))) {
-      out.write(new Gson().toJson(App.gameList));
+    File file = new File("./game.data");
+    try (DataOutputStream out =
+        new DataOutputStream(new BufferedOutputStream(new FileOutputStream(file)))) {
+      out.writeInt(App.gameList.size());
+      for (Game game : App.gameList) {
+        out.writeInt(game.getGameNum());
+        out.writeUTF(game.getGameName());
+        out.writeUTF(game.getGameProduction());
+        out.writeUTF(game.getGameDate().toString());
+        out.writeUTF(game.getGamePlatform());
+        out.writeUTF(game.getGameGenre());
+        out.writeUTF(game.getGameIllust());
+        out.writeUTF(game.getGameVoice());
+      }
       System.out.printf("%d개의 게임 데이터, ", App.gameList.size());
     } catch (IOException e) {
       System.out.println("파일 쓰기 중 오류가 발생하였습니다 : " + e.getMessage());
@@ -180,9 +215,17 @@ public class App {
   }
 
   private static void saveUserData() {
-    File file = new File("./user.json");
-    try (BufferedWriter out = new BufferedWriter(new FileWriter(file))) {
-      out.write(new Gson().toJson(App.userList));
+    File file = new File("./user.data");
+    try (DataOutputStream out =
+        new DataOutputStream(new BufferedOutputStream(new FileOutputStream(file)))) {
+      out.writeInt(App.userList.size());
+      for (User user : App.userList) {
+        out.writeInt(user.getUserNum());
+        out.writeUTF(user.getUserEmail());
+        out.writeUTF(user.getUserPW());
+        out.writeUTF(user.getUserName());
+        out.writeUTF(user.getUserResisteredDate().toString());
+      }
       System.out.printf("%d개의 유저 데이터, ", App.userList.size());
     } catch (IOException e) {
       System.out.println("파일 쓰기 중 오류가 발생하였습니다 : " + e.getMessage());
@@ -190,9 +233,17 @@ public class App {
   }
 
   private static void saveBoardData() {
-    File file = new File("board.json");
-    try (BufferedWriter out = new BufferedWriter(new FileWriter(file))) {
-      out.write(new Gson().toJson(App.boardList));
+    File file = new File("board.data");
+    try (DataOutputStream out =
+        new DataOutputStream(new BufferedOutputStream(new FileOutputStream(file)))) {
+      out.writeInt(App.boardList.size());
+      for (Board board : App.boardList) {
+        out.writeInt(board.getBbsNum());
+        out.writeUTF(board.getBbsName());
+        out.writeUTF(board.getBbsText());
+        out.writeUTF(board.getToday().toString());
+        out.writeInt(board.getBbsHits());
+      }
       System.out.printf("%d개의 게시글 데이터를 저장했습니다.\n", App.boardList.size());
     } catch (IOException e) {
       System.out.println("파일 쓰기 중 오류가 발생하였습니다 : " + e.getMessage());
