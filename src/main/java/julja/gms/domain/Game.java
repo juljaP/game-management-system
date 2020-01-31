@@ -1,9 +1,11 @@
 package julja.gms.domain;
 
+import java.io.Serializable;
 import java.sql.Date;
 
-public class Game {
+public class Game implements Serializable {
 
+  private static final long serialVersionUID = 4108093492957016867L;
   private int gameNum;
   private String gameName, gameProduction, gamePlatform, gameGenre, gameIllust, gameVoice;
   private Date gameDate;

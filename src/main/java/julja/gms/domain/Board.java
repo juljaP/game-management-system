@@ -1,9 +1,11 @@
 package julja.gms.domain;
 
+import java.io.Serializable;
 import java.sql.Date;
 
-public class Board {
+public class Board implements Serializable {
 
+  private static final long serialVersionUID = 6151682943645316748L;
   private String bbsName, bbsText;
   private Date today;
   private int bbsNum, bbsHits;

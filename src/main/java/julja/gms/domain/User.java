@@ -1,9 +1,11 @@
 package julja.gms.domain;
 
+import java.io.Serializable;
 import java.sql.Date;
 
-public class User {
+public class User implements Serializable {
 
+  private static final long serialVersionUID = -8578616307920400868L;
   private int userNum;
   private String userEmail, userPW, userName;
   private Date userResisteredDate;

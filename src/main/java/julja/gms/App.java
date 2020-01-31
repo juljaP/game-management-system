@@ -2,13 +2,12 @@ package julja.gms;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.sql.Date;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Deque;
@@ -129,64 +128,37 @@ public class App {
     System.out.println();
   }
 
+  @SuppressWarnings("unchecked")
   private static void loadGameData() {
-    File file = new File("./game.data");
-    try (DataInputStream in =
-        new DataInputStream(new BufferedInputStream(new FileInputStream(file)))) {
-      int size = in.readInt();
-      for (int i = 0; i < size; i++) {
-        Game game = new Game();
-        game.setGameNum(in.readInt());
-        game.setGameName(in.readUTF());
-        game.setGameProduction(in.readUTF());
-        game.setGameDate(Date.valueOf(in.readUTF()));
-        game.setGamePlatform(in.readUTF());
-        game.setGameGenre(in.readUTF());
-        game.setGameIllust(in.readUTF());
-        game.setGameVoice(in.readUTF());
-        App.gameList.add(game);
-      }
+    File file = new File("./game.ser");
+    try (ObjectInputStream in =
+        new ObjectInputStream(new BufferedInputStream(new FileInputStream(file)))) {
+      gameList = (List<Game>) in.readObject();
       System.out.printf("%d개의 게임 데이터, ", App.gameList.size());
     } catch (Exception e) {
       System.out.println("파일 읽기 중 오류 발생" + e.getMessage());
     }
   }
 
+  @SuppressWarnings("unchecked")
   private static void loadUserData() {
 
-    File file = new File("./user.data");
-    try (DataInputStream in =
-        new DataInputStream(new BufferedInputStream(new FileInputStream(file)))) {
-      int size = in.readInt();
-      for (int i = 0; i < size; i++) {
-        User user = new User();
-        user.setUserNum(in.readInt());
-        user.setUserEmail(in.readUTF());
-        user.setUserPW(in.readUTF());
-        user.setUserName(in.readUTF());
-        user.setUserResisteredDate(Date.valueOf(in.readUTF()));
-        App.userList.add(user);
-      }
+    File file = new File("./user.ser");
+    try (ObjectInputStream in =
+        new ObjectInputStream(new BufferedInputStream(new FileInputStream(file)))) {
+      userList = (List<User>) in.readObject();
       System.out.printf("%d개의 유저 데이터, ", App.userList.size());
     } catch (Exception e) {
       System.out.println("파일 읽기 중 오류 발생" + e.getMessage());
     }
   }
 
+  @SuppressWarnings("unchecked")
   private static void loadBoardData() {
-    File file = new File("./board.data");
-    try (DataInputStream in =
-        new DataInputStream(new BufferedInputStream(new FileInputStream(file)))) {
-      int size = in.readInt();
-      for (int i = 0; i < size; i++) {
-        Board board = new Board();
-        board.setBbsNum(in.readInt());
-        board.setBbsName(in.readUTF());
-        board.setBbsText(in.readUTF());
-        board.setToday(Date.valueOf(in.readUTF()));
-        board.setBbsHits(in.readInt());
-        App.boardList.add(board);
-      }
+    File file = new File("./board.ser");
+    try (ObjectInputStream in =
+        new ObjectInputStream(new BufferedInputStream(new FileInputStream(file)))) {
+      boardList = (List<Board>) in.readObject();
       System.out.printf("%d개의 게시글 데이터를 로딩했습니다.\n", App.boardList.size());
     } catch (Exception e) {
       System.out.println("파일 읽기 중 오류 발생" + e.getMessage());
@@ -194,20 +166,10 @@ public class App {
   }
 
   private static void saveGameData() {
-    File file = new File("./game.data");
-    try (DataOutputStream out =
-        new DataOutputStream(new BufferedOutputStream(new FileOutputStream(file)))) {
-      out.writeInt(App.gameList.size());
-      for (Game game : App.gameList) {
-        out.writeInt(game.getGameNum());
-        out.writeUTF(game.getGameName());
-        out.writeUTF(game.getGameProduction());
-        out.writeUTF(game.getGameDate().toString());
-        out.writeUTF(game.getGamePlatform());
-        out.writeUTF(game.getGameGenre());
-        out.writeUTF(game.getGameIllust());
-        out.writeUTF(game.getGameVoice());
-      }
+    File file = new File("./game.ser");
+    try (ObjectOutputStream out =
+        new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(file)))) {
+      out.writeObject(gameList);
       System.out.printf("%d개의 게임 데이터, ", App.gameList.size());
     } catch (IOException e) {
       System.out.println("파일 쓰기 중 오류가 발생하였습니다 : " + e.getMessage());
@@ -215,17 +177,10 @@ public class App {
   }
 
   private static void saveUserData() {
-    File file = new File("./user.data");
-    try (DataOutputStream out =
-        new DataOutputStream(new BufferedOutputStream(new FileOutputStream(file)))) {
-      out.writeInt(App.userList.size());
-      for (User user : App.userList) {
-        out.writeInt(user.getUserNum());
-        out.writeUTF(user.getUserEmail());
-        out.writeUTF(user.getUserPW());
-        out.writeUTF(user.getUserName());
-        out.writeUTF(user.getUserResisteredDate().toString());
-      }
+    File file = new File("./user.ser");
+    try (ObjectOutputStream out =
+        new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(file)))) {
+      out.writeObject(userList);
       System.out.printf("%d개의 유저 데이터, ", App.userList.size());
     } catch (IOException e) {
       System.out.println("파일 쓰기 중 오류가 발생하였습니다 : " + e.getMessage());
@@ -233,17 +188,10 @@ public class App {
   }
 
   private static void saveBoardData() {
-    File file = new File("board.data");
-    try (DataOutputStream out =
-        new DataOutputStream(new BufferedOutputStream(new FileOutputStream(file)))) {
-      out.writeInt(App.boardList.size());
-      for (Board board : App.boardList) {
-        out.writeInt(board.getBbsNum());
-        out.writeUTF(board.getBbsName());
-        out.writeUTF(board.getBbsText());
-        out.writeUTF(board.getToday().toString());
-        out.writeInt(board.getBbsHits());
-      }
+    File file = new File("board.ser");
+    try (ObjectOutputStream out =
+        new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(file)))) {
+      out.writeObject(boardList);
       System.out.printf("%d개의 게시글 데이터를 저장했습니다.\n", App.boardList.size());
     } catch (IOException e) {
       System.out.println("파일 쓰기 중 오류가 발생하였습니다 : " + e.getMessage());
