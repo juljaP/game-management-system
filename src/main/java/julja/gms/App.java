@@ -12,11 +12,14 @@ import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Deque;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 import java.util.Scanner;
+import java.util.Set;
+import julja.context.ApplicationContextListener;
 import julja.gms.Handler.BoardAddCommand;
 import julja.gms.Handler.BoardDeleteCommand;
 import julja.gms.Handler.BoardDetailCommand;
@@ -40,38 +43,62 @@ import julja.util.Prompt;
 
 public class App {
 
-  static Scanner sc = new Scanner(System.in);
-  static final int SIZE = 100;
-  static Deque<String> stack = new ArrayDeque<>();
-  static Queue<String> queue = new LinkedList<>();
-  static List<Game> gameList = new ArrayList<>();
-  static List<Board> boardList = new ArrayList<>();
-  static List<User> userList = new ArrayList<>();
+  Scanner sc = new Scanner(System.in);
+  final int SIZE = 100;
+  Deque<String> stack = new ArrayDeque<>();
+  Queue<String> queue = new LinkedList<>();
+  List<Game> gameList = new ArrayList<>();
+  List<Board> boardList = new ArrayList<>();
+  List<User> userList = new ArrayList<>();
+  Set<ApplicationContextListener> listeners = new HashSet<>();
 
-  public static void main(String[] args) {
+  public void addApplicationContextListener(ApplicationContextListener listener) {
+    listeners.add(listener);
+  }
+
+  public void removeApplicationContextListener(ApplicationContextListener listener) {
+    listeners.remove(listener);
+  }
+
+  private void notifyApplicationInitialized() {
+    for (ApplicationContextListener listener : listeners) {
+      listener.contextInitailized();
+    }
+  }
+
+  private void notifyApplicationDestroyed() {
+    for (ApplicationContextListener listener : listeners) {
+      listener.contextDestroyed();
+    }
+  }
+
+  public void service() {
+
+    notifyApplicationInitialized();
+
     loadGameData();
     loadUserData();
     loadBoardData();
-    Prompt prompt = new Prompt(App.sc);
+    Prompt prompt = new Prompt(sc);
     HashMap<String, Command> commandMap = new HashMap<>();
 
-    commandMap.put("/board/add", new BoardAddCommand(prompt, App.boardList));
-    commandMap.put("/board/delete", new BoardDeleteCommand(prompt, App.boardList));
-    commandMap.put("/board/detail", new BoardDetailCommand(prompt, App.boardList));
-    commandMap.put("/board/list", new BoardListCommand(App.boardList));
-    commandMap.put("/board/update", new BoardUpdateCommand(prompt, App.boardList));
+    commandMap.put("/board/add", new BoardAddCommand(prompt, boardList));
+    commandMap.put("/board/delete", new BoardDeleteCommand(prompt, boardList));
+    commandMap.put("/board/detail", new BoardDetailCommand(prompt, boardList));
+    commandMap.put("/board/list", new BoardListCommand(boardList));
+    commandMap.put("/board/update", new BoardUpdateCommand(prompt, boardList));
 
-    commandMap.put("/game/add", new GameAddCommand(prompt, App.gameList));
-    commandMap.put("/game/delete", new GameDeleteCommand(prompt, App.gameList));
-    commandMap.put("/game/detail", new GameDetailCommand(prompt, App.gameList));
-    commandMap.put("/game/list", new GameListCommand(App.gameList));
-    commandMap.put("/game/update", new GameUpdateCommand(prompt, App.gameList));
+    commandMap.put("/game/add", new GameAddCommand(prompt, gameList));
+    commandMap.put("/game/delete", new GameDeleteCommand(prompt, gameList));
+    commandMap.put("/game/detail", new GameDetailCommand(prompt, gameList));
+    commandMap.put("/game/list", new GameListCommand(gameList));
+    commandMap.put("/game/update", new GameUpdateCommand(prompt, gameList));
 
-    commandMap.put("/user/add", new UserAddCommand(prompt, App.userList));
-    commandMap.put("/user/delete", new UserDeleteCommand(prompt, App.userList));
-    commandMap.put("/user/detail", new UserDetailCommand(prompt, App.userList));
-    commandMap.put("/user/list", new UserListCommand(App.userList));
-    commandMap.put("/user/update", new UserUpdateCommand(prompt, App.userList));
+    commandMap.put("/user/add", new UserAddCommand(prompt, userList));
+    commandMap.put("/user/delete", new UserDeleteCommand(prompt, userList));
+    commandMap.put("/user/detail", new UserDetailCommand(prompt, userList));
+    commandMap.put("/user/list", new UserListCommand(userList));
+    commandMap.put("/user/update", new UserUpdateCommand(prompt, userList));
 
     while (true) {
       String command = prompt();
@@ -82,17 +109,17 @@ public class App {
         System.out.println("안녕!");
         break;
       } else if (command.equalsIgnoreCase("history")) {
-        printCommandHistory(App.stack.iterator());
+        printCommandHistory(stack.iterator());
         System.out.println();
         continue;
       } else if (command.equalsIgnoreCase("history2")) {
-        printCommandHistory(App.queue.iterator());
+        printCommandHistory(queue.iterator());
         System.out.println();
         continue;
       }
 
-      App.stack.push(command);
-      App.queue.offer(command);
+      stack.push(command);
+      queue.offer(command);
 
       Command commandHandler = commandMap.get(command);
 
@@ -109,9 +136,12 @@ public class App {
     saveGameData();
     saveUserData();
     saveBoardData();
+
+    notifyApplicationDestroyed();
+
   }
 
-  private static void printCommandHistory(Iterator<String> iter) {
+  private void printCommandHistory(Iterator<String> iter) {
     Iterator<String> iterator = iter;
     int count = 0;
     String answer = null;
@@ -119,7 +149,7 @@ public class App {
       System.out.println(iterator.next());
       if (++count % 5 == 0) {
         System.out.print(": ");
-        answer = App.sc.nextLine();
+        answer = sc.nextLine();
         if (answer.equalsIgnoreCase("q")) {
           break;
         }
@@ -129,78 +159,85 @@ public class App {
   }
 
   @SuppressWarnings("unchecked")
-  private static void loadGameData() {
+  private void loadGameData() {
     File file = new File("./game.ser");
     try (ObjectInputStream in =
         new ObjectInputStream(new BufferedInputStream(new FileInputStream(file)))) {
       gameList = (List<Game>) in.readObject();
-      System.out.printf("%d개의 게임 데이터, ", App.gameList.size());
+      System.out.printf("%d개의 게임 데이터, ", gameList.size());
     } catch (Exception e) {
       System.out.println("파일 읽기 중 오류 발생" + e.getMessage());
     }
   }
 
   @SuppressWarnings("unchecked")
-  private static void loadUserData() {
+  private void loadUserData() {
 
     File file = new File("./user.ser");
     try (ObjectInputStream in =
         new ObjectInputStream(new BufferedInputStream(new FileInputStream(file)))) {
       userList = (List<User>) in.readObject();
-      System.out.printf("%d개의 유저 데이터, ", App.userList.size());
+      System.out.printf("%d개의 유저 데이터, ", userList.size());
     } catch (Exception e) {
       System.out.println("파일 읽기 중 오류 발생" + e.getMessage());
     }
   }
 
   @SuppressWarnings("unchecked")
-  private static void loadBoardData() {
+  private void loadBoardData() {
     File file = new File("./board.ser");
     try (ObjectInputStream in =
         new ObjectInputStream(new BufferedInputStream(new FileInputStream(file)))) {
       boardList = (List<Board>) in.readObject();
-      System.out.printf("%d개의 게시글 데이터를 로딩했습니다.\n", App.boardList.size());
+      System.out.printf("%d개의 게시글 데이터를 로딩했습니다.\n", boardList.size());
     } catch (Exception e) {
       System.out.println("파일 읽기 중 오류 발생" + e.getMessage());
     }
   }
 
-  private static void saveGameData() {
+  private void saveGameData() {
     File file = new File("./game.ser");
     try (ObjectOutputStream out =
         new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(file)))) {
       out.writeObject(gameList);
-      System.out.printf("%d개의 게임 데이터, ", App.gameList.size());
+      System.out.printf("%d개의 게임 데이터, ", gameList.size());
     } catch (IOException e) {
       System.out.println("파일 쓰기 중 오류가 발생하였습니다 : " + e.getMessage());
     }
   }
 
-  private static void saveUserData() {
+  private void saveUserData() {
     File file = new File("./user.ser");
     try (ObjectOutputStream out =
         new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(file)))) {
       out.writeObject(userList);
-      System.out.printf("%d개의 유저 데이터, ", App.userList.size());
+      System.out.printf("%d개의 유저 데이터, ", userList.size());
     } catch (IOException e) {
       System.out.println("파일 쓰기 중 오류가 발생하였습니다 : " + e.getMessage());
     }
   }
 
-  private static void saveBoardData() {
+  private void saveBoardData() {
     File file = new File("board.ser");
     try (ObjectOutputStream out =
         new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(file)))) {
       out.writeObject(boardList);
-      System.out.printf("%d개의 게시글 데이터를 저장했습니다.\n", App.boardList.size());
+      System.out.printf("%d개의 게시글 데이터를 저장했습니다.\n", boardList.size());
     } catch (IOException e) {
       System.out.println("파일 쓰기 중 오류가 발생하였습니다 : " + e.getMessage());
     }
   }
 
-  private static String prompt() {
+  private String prompt() {
     System.out.print("명령> ");
-    String command = App.sc.nextLine();
+    String command = sc.nextLine();
     return command;
   }
+
+
+  public static void main(String[] args) {
+    App app = new App();
+    app.service();
+  }
+
 }
