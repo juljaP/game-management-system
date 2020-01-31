@@ -1,5 +1,7 @@
 package julja.gms;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -127,7 +129,7 @@ public class App {
 
   private static void loadGameData() {
     File file = new File("./game.json");
-    try (FileReader in = new FileReader(file)) {
+    try (BufferedReader in = new BufferedReader(new FileReader(file))) {
       Gson gson = new Gson();
       Game[] games = gson.fromJson(in, Game[].class);
       for (Game game : games) {
@@ -142,7 +144,7 @@ public class App {
   private static void loadUserData() {
 
     File file = new File("./user.json");
-    try (FileReader in = new FileReader(file)) {
+    try (BufferedReader in = new BufferedReader(new FileReader(file))) {
       User[] users = new Gson().fromJson(in, User[].class);
       for (User user : users) {
         App.userList.add(user);
@@ -155,7 +157,7 @@ public class App {
 
   private static void loadBoardData() {
     File file = new File("./board.json");
-    try (FileReader in = new FileReader(file)) {
+    try (BufferedReader in = new BufferedReader(new FileReader(file))) {
       Gson gson = new Gson();
       Board[] boards = (gson.fromJson(in, Board[].class));
       for (Board board : boards) {
@@ -169,7 +171,7 @@ public class App {
 
   private static void saveGameData() {
     File file = new File("./game.json");
-    try (FileWriter out = new FileWriter(file)) {
+    try (BufferedWriter out = new BufferedWriter(new FileWriter(file))) {
       out.write(new Gson().toJson(App.gameList));
       System.out.printf("%d개의 게임 데이터, ", App.gameList.size());
     } catch (IOException e) {
@@ -179,7 +181,7 @@ public class App {
 
   private static void saveUserData() {
     File file = new File("./user.json");
-    try (FileWriter out = new FileWriter(file)) {
+    try (BufferedWriter out = new BufferedWriter(new FileWriter(file))) {
       out.write(new Gson().toJson(App.userList));
       System.out.printf("%d개의 유저 데이터, ", App.userList.size());
     } catch (IOException e) {
@@ -189,7 +191,7 @@ public class App {
 
   private static void saveBoardData() {
     File file = new File("board.json");
-    try (FileWriter out = new FileWriter(file)) {
+    try (BufferedWriter out = new BufferedWriter(new FileWriter(file))) {
       out.write(new Gson().toJson(App.boardList));
       System.out.printf("%d개의 게시글 데이터를 저장했습니다.\n", App.boardList.size());
     } catch (IOException e) {
