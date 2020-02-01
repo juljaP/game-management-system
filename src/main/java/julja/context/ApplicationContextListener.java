@@ -1,9 +1,11 @@
 package julja.context;
 
+import java.util.Map;
+
 public interface ApplicationContextListener {
 
-  void contextInitailized();
+  void contextInitailized(Map<String, Object> map);
 
-  void contextDestroyed();
+  void contextDestroyed(Map<String, Object> map);
 
 }
