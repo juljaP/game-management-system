@@ -36,7 +36,6 @@ import julja.util.Prompt;
 public class App {
 
   Scanner sc = new Scanner(System.in);
-  final int SIZE = 100;
   Deque<String> stack = new ArrayDeque<>();
   Queue<String> queue = new LinkedList<>();
   Set<ApplicationContextListener> listeners = new HashSet<>();
